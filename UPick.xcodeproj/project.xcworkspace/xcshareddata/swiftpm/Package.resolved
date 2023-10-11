@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "b2fa556e4e48cbf06cf8c63def138c98f4b811fa",
+        "version" : "5.8.0"
+      }
+    },
+    {
+      "identity" : "contentblurview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hiddevdploeg/ContentBlurView",
+      "state" : {
+        "branch" : "main",
+        "revision" : "57fe106a209fc43cac24aaf512c60362f3eef377"
+      }
+    },
+    {
+      "identity" : "snappable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hugehoge/Snappable.git",
+      "state" : {
+        "revision" : "806de8123c87fdd818f1b8998a56417a1a510007",
+        "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "swiftuigradientblur",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/unitedadityaa/SwiftUIGradientBlur.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d9cccf84c0b20433c679c0470878205d235e81bb"
+      }
+    }
+  ],
+  "version" : 2
+}
