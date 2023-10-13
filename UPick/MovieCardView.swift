@@ -15,9 +15,11 @@ struct MovieCardView: View {
     @Binding var AboutShowing : Bool
     @Binding var descriptionState : String
     
+    
     var title : String
     var Img : String
     var description : String
+    var StreamingServices : [String]
     
     
     
@@ -40,8 +42,10 @@ struct MovieCardView: View {
             
             Spacer()
             
+           
+            
             HStack{
-                AvailableStreamingServicesGroup()
+                AvailableStreamingServicesGroup(StreamingServices: StreamingServices)
                 Spacer()
                 MoreInfoButton(AboutShowing: $AboutShowing, description: description, title: title, descriptionState: $descriptionState)
             }
@@ -59,7 +63,9 @@ struct MovieCardView: View {
 
 
 struct MoreInfoButton : View {
+    
     @Binding var AboutShowing : Bool
+    
     var description : String
     var title : String
     
@@ -91,11 +97,15 @@ struct MoreInfoButton : View {
 }
 
 struct AvailableStreamingServicesGroup : View {
+    
+    var StreamingServices: [String]
+    
     var body: some View{
         HStack(spacing: -12){
-            StreamingServiceIndicator()
-            StreamingServiceIndicator()
-            StreamingServiceIndicator()
+            
+            ForEach(StreamingServices, id: \.self) { string in
+                StreamingServiceIndicator(text: string)
+            }
             
         }
         .environment(\.layoutDirection, .rightToLeft)
@@ -105,15 +115,54 @@ struct AvailableStreamingServicesGroup : View {
 
 
 struct StreamingServiceIndicator : View {
+    var text : String
+    
     var body: some View{
+        
+        
+        
         ZStack {
-            AsyncImage(url: URL(string: "https://logo.clearbit.com/Netflix.com")) { image in
-                image.resizable().aspectRatio(contentMode: .fit).frame(width: 25, height: 25)
-            } placeholder: {
-                ProgressView()
+            
+            switch text{
+            case "netflix":
+                AsyncImage(url: URL(string: "https://logo.clearbit.com/Netflix.com")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 25, height: 25)
+                } placeholder: {
+                    ProgressView()
+                }
+                .cornerRadius(15)
+                
+            case "apple":
+                AsyncImage(url: URL(string: "https://logo.clearbit.com/apple.com")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 30, height: 30)
+                } placeholder: {
+                    ProgressView()
+                }
+                .cornerRadius(18)
+                
+            case "prime":
+                AsyncImage(url: URL(string: "https://logo.clearbit.com/primevideo.com")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                } placeholder: {
+                    ProgressView()
+                }
+                .cornerRadius(30)
+                
+            case "disney":
+                
+                Image("DisneyIcon")
+                    .resizable().aspectRatio(contentMode: .fit).frame(width: 70, height: 70)
+                        .cornerRadius(30)
+              
+                
+            default:
+                Text("?")
+                
+            
+                
             }
             
-            .cornerRadius(15)
+       
             
             
             // Adjust the offset as needed// Adjust the corner radius to your preference
@@ -140,7 +189,10 @@ struct MovieCardView_Previews: PreviewProvider {
     @State static var AboutShowingPR : Bool = false
     
     @State static var descriptionState : String = "With his carefree lifestyle on the line, a wealthy charmer poses as a ranch hand to get a hardworking farmer to sell her family’s land before Christmas."
+    
+    @State static var streamingServices : [String] = ["netflix", "apple", "prime", "disney"]
+    
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, descriptionState: $descriptionState, title: title, Img: imgPR, description: description)
+        MovieCardView(AboutShowing: $AboutShowingPR, descriptionState: $descriptionState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices)
     }
 }

@@ -14,6 +14,7 @@ struct MovieScroll: View {
     @Binding var AboutShowing : Bool
     @Binding var descriptionState : String
     
+    
     var body: some View{
         VStack(spacing:0){
             
@@ -22,7 +23,7 @@ struct MovieScroll: View {
                 VStack(spacing: 0){
                     ForEach(apiController.Movies, id:  \.self) { movie in
                         VStack{
-                            MovieCardView(AboutShowing: $AboutShowing, descriptionState: $descriptionState, title: movie.title, Img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500/\(movie.img)", description: movie.description)
+                            MovieCardView(AboutShowing: $AboutShowing, descriptionState: $descriptionState, title: movie.title, Img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500/\(movie.img)", description: movie.description, StreamingServices: movie.StreamingServices)
                         }.frame(width: screenWidth,height: screenHeight * 0.81)
                         
                     }
@@ -33,19 +34,19 @@ struct MovieScroll: View {
             .scrollTargetBehavior(.paging) 
                    
             
-//            .onAppear{
-//                apiController.getData { error in
-//                    if let error = error {
-//                        // Handle the error
-//                        print("Error: \(error)")
-//                    } else {
-//                        // The data retrieval and processing are complete, but no movie data is returned here
-//                        print("Data retrieval and processing completed")
-//
-//                        
-//                    }
-//                }
-//            }
+            .onAppear{
+                apiController.getData { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error: \(error)")
+                    } else {
+                        // The data retrieval and processing are complete, but no movie data is returned here
+                        print("Data retrieval and processing completed")
+
+                        
+                    }
+                }
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var AboutShowing : Bool = false
     @State private var descriptionState : String = ""
     
+    
     var body: some View {
         VStack(spacing: 0) {
             

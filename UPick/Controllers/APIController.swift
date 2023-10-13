@@ -50,24 +50,32 @@ class APIController : ObservableObject {
                     if let json = value as? [String: Any],
                        let results = json["result"] as? [[String: Any]] {
                         
-                        var serviceArray : [String] = []
+                        
                         
                         
                         let dispatchGroup = DispatchGroup()
                         
                         for result in results {
+                            
+                            var serviceArray : [String] = []
+                            
                             if let originalTitle = result["originalTitle"] as? String,
                                let streamingInfo = result["streamingInfo"] as? [String: Any],
                                let gbInfo = streamingInfo["gb"] as? [[String: Any]] {
                                 
                                 for serviceInfo in gbInfo {
                                        if let serviceName = serviceInfo["service"] as? String {
-                                        serviceArray.append(serviceName)
+                                           if serviceArray.contains(serviceName) == false {
+                                               serviceArray.append(serviceName)
+                                           }
+                                         
                                     }
                                 }
                                 
                                 
                                 dispatchGroup.enter()
+                                
+                                serviceArray.sort()
                                 
                                 self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray) { movie in
                                     if let movie = movie {
