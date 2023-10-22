@@ -11,8 +11,9 @@ struct TopBar : View {
     var body: some View {
         
             HStack {
-                Text("UPICK")
-                    .font(.system(size: 45, weight: .bold))
+                Text("UPick.")
+                    .font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 40))
+ 
                     
                 Spacer()
                 FilterButton()

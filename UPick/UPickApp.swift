@@ -11,7 +11,7 @@ import SwiftUI
 struct UPickApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreenView()
                 .preferredColorScheme(.light)
         }
     }

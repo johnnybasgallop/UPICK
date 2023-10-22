@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		CA4171582AD57C2D008E570D /* MovieInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4171572AD57C2D008E570D /* MovieInfoView.swift */; };
+		CA41715D2ADED833008E570D /* JBM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA41715C2ADED833008E570D /* JBM.ttf */; };
+		CA4171602ADF02D7008E570D /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA41715F2ADF02D7008E570D /* SplashScreenView.swift */; };
+		CA6C32C92AE54B78004F2833 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = CA6C32C82AE54B78004F2833 /* WrappingHStack */; };
 		CA7305952AC4BACF00DAF6D6 /* Snappable in Frameworks */ = {isa = PBXBuildFile; productRef = CA7305942AC4BACF00DAF6D6 /* Snappable */; };
 		CA8B4CC82AB740ED00855FF6 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8B4CC72AB740ED00855FF6 /* APIController.swift */; };
 		CA8B4CCB2AB7489A00855FF6 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CA8B4CCA2AB7489A00855FF6 /* Alamofire */; };
@@ -27,6 +30,9 @@
 
 /* Begin PBXFileReference section */
 		CA4171572AD57C2D008E570D /* MovieInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoView.swift; sourceTree = "<group>"; };
+		CA41715C2ADED833008E570D /* JBM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = JBM.ttf; sourceTree = "<group>"; };
+		CA41715E2ADED86B008E570D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CA41715F2ADF02D7008E570D /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		CA8B4CC72AB740ED00855FF6 /* APIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		CAA4EBE72AC375D900CB28D9 /* FilterStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStruct.swift; sourceTree = "<group>"; };
 		CAA4EBE92AC375F800CB28D9 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
@@ -50,12 +56,21 @@
 				CA7305952AC4BACF00DAF6D6 /* Snappable in Frameworks */,
 				CAE85CE22ACE14F000E7412A /* ContentBlurView in Frameworks */,
 				CAE85CDF2ACE115D00E7412A /* SwiftUIGradientBlur in Frameworks */,
+				CA6C32C92AE54B78004F2833 /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA41715B2ADED827008E570D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				CA41715C2ADED833008E570D /* JBM.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		CA8B4CC62AB740D600855FF6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,9 +107,11 @@
 		CAA635082AB1145400ED6419 /* UPick */ = {
 			isa = PBXGroup;
 			children = (
-				CA8B4CC62AB740D600855FF6 /* Controllers */,
-				CAA635182AB114E200ED6419 /* Components */,
+				CA41715E2ADED86B008E570D /* Info.plist */,
+				CA41715B2ADED827008E570D /* Fonts */,
+				CAA4EBE62AC375C300CB28D9 /* Structures */,
 				CAA635172AB114D300ED6419 /* Views */,
+				CA8B4CC62AB740D600855FF6 /* Controllers */,
 				CAA635092AB1145400ED6419 /* UPickApp.swift */,
 				CAA6350D2AB1145500ED6419 /* Assets.xcassets */,
 				CAA6350F2AB1145500ED6419 /* Preview Content */,
@@ -113,12 +130,13 @@
 		CAA635172AB114D300ED6419 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CAA4EBE62AC375C300CB28D9 /* Structures */,
+				CAA635182AB114E200ED6419 /* Components */,
 				CAA6350B2AB1145400ED6419 /* ContentView.swift */,
 				CAD0B04B2ABE627D00D8833B /* MovieScroll.swift */,
 				CAD0B04D2AC0B5F300D8833B /* TopBar.swift */,
 				CAD0B04F2AC370B100D8833B /* FilterView.swift */,
 				CA4171572AD57C2D008E570D /* MovieInfoView.swift */,
+				CA41715F2ADF02D7008E570D /* SplashScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -129,6 +147,7 @@
 				CAA635192AB114F800ED6419 /* MovieCardView.swift */,
 			);
 			name = Components;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +171,7 @@
 				CA7305942AC4BACF00DAF6D6 /* Snappable */,
 				CAE85CDE2ACE115D00E7412A /* SwiftUIGradientBlur */,
 				CAE85CE12ACE14F000E7412A /* ContentBlurView */,
+				CA6C32C82AE54B78004F2833 /* WrappingHStack */,
 			);
 			productName = UPick;
 			productReference = CAA635062AB1145400ED6419 /* UPick.app */;
@@ -186,6 +206,7 @@
 				CA7305932AC4BACF00DAF6D6 /* XCRemoteSwiftPackageReference "Snappable" */,
 				CAE85CDD2ACE115C00E7412A /* XCRemoteSwiftPackageReference "SwiftUIGradientBlur" */,
 				CAE85CE02ACE14F000E7412A /* XCRemoteSwiftPackageReference "ContentBlurView" */,
+				CA6C32C72AE54B78004F2833 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 			);
 			productRefGroup = CAA635072AB1145400ED6419 /* Products */;
 			projectDirPath = "";
@@ -201,6 +222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA41715D2ADED833008E570D /* JBM.ttf in Resources */,
 				CAA635112AB1145500ED6419 /* Preview Assets.xcassets in Resources */,
 				CAA6350E2AB1145500ED6419 /* Assets.xcassets in Resources */,
 			);
@@ -217,6 +239,7 @@
 				CAD0B0502AC370B100D8833B /* FilterView.swift in Sources */,
 				CAA4EBEA2AC375F800CB28D9 /* Movie.swift in Sources */,
 				CAD0B04E2AC0B5F300D8833B /* TopBar.swift in Sources */,
+				CA4171602ADF02D7008E570D /* SplashScreenView.swift in Sources */,
 				CA8B4CC82AB740ED00855FF6 /* APIController.swift in Sources */,
 				CAA6350C2AB1145400ED6419 /* ContentView.swift in Sources */,
 				CAA6351A2AB114F800ED6419 /* MovieCardView.swift in Sources */,
@@ -354,6 +377,8 @@
 				DEVELOPMENT_TEAM = 9XN4AG4472;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UPick/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -384,6 +409,8 @@
 				DEVELOPMENT_TEAM = 9XN4AG4472;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UPick/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -427,6 +454,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CA6C32C72AE54B78004F2833 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.11;
+			};
+		};
 		CA7305932AC4BACF00DAF6D6 /* XCRemoteSwiftPackageReference "Snappable" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hugehoge/Snappable.git";
@@ -462,6 +497,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CA6C32C82AE54B78004F2833 /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA6C32C72AE54B78004F2833 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
 		CA7305942AC4BACF00DAF6D6 /* Snappable */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CA7305932AC4BACF00DAF6D6 /* XCRemoteSwiftPackageReference "Snappable" */;

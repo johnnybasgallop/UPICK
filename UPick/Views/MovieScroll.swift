@@ -31,7 +31,7 @@ struct MovieScroll: View {
                 }
             }
             .frame(height: screenHeight * 0.81)
-            .scrollTargetBehavior(.paging) 
+            .scrollTargetBehavior(.paging)
                    
             
             .onAppear{
@@ -60,4 +60,3 @@ struct MovieScroll_Previews: PreviewProvider {
         MovieScroll(AboutShowing: $AboutShowingPR, descriptionState: $descriptionStatePr)
     }
 }
-
