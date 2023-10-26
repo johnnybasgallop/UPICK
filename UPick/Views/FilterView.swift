@@ -15,6 +15,7 @@ struct FilterView: View {
     @State var maxYear : Int = 2023
     @Binding var example : Bool
     @Binding var movies : [Movie]
+    @State var Genre : [String] = ["27"]
     
     @Environment(\.dismiss) var dismiss
     
@@ -22,14 +23,14 @@ struct FilterView: View {
     var body: some View {
         ScrollView{
             
-            GenreSelect()
+            GenreSelect(Genre: $Genre)
             
             YearSliders(minYear: $minYear, maxYear: $maxYear)
             
             
         }
         .onDisappear{
-            apiController.getData(FilterState : Filter(genres: ["27"], services: ["netflix"], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
+            apiController.getData(FilterState : Filter(genres: Genre, services: ["netflix"], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
                 if let error = error {
                     
                     print("Error: \(error)")
@@ -50,6 +51,8 @@ struct FilterView: View {
 
 
 struct GenreSelect : View {
+    
+    @Binding var Genre : [String]
     
     let movieGenres: [[String: Any]] = [
         ["name": "Action", "id": 28],
@@ -81,7 +84,7 @@ struct GenreSelect : View {
                 Spacer()
             }
             WrappingHStack(movieGenres, id: \.self) { movie in
-                GenreBox(text: movie["name"] as! String, id: movie["id"] as! Int)
+                GenreBox(Genre: $Genre, text: movie["name"] as! String, id: movie["id"] as! Int)
             }
             .padding(20)
             .frame(width: screenWidth * 0.95)
@@ -96,7 +99,7 @@ struct GenreSelect : View {
 
 struct GenreBox : View {
     @StateObject var apiController = APIController()
-    
+    @Binding var Genre : [String]
     var text : String
     var id : Int
     
@@ -108,6 +111,7 @@ struct GenreBox : View {
         Button(action: {
             isSelected.toggle()
             
+            Genre[0] = "\(id)"
             
         }) {
             Text(text)

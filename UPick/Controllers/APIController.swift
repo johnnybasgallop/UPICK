@@ -41,6 +41,7 @@ class APIController : ObservableObject {
             "show_type": FilterState.isMovie ? "movie" : "series",
             "year_min" : "\(FilterState.minYear)",
             "year_max" : "\(FilterState.maxYear)",
+            "genres_relation" : "or",
             "show_original_language": "en"
         ]
         
