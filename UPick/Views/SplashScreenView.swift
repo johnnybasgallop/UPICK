@@ -13,7 +13,7 @@ struct SplashScreenView: View {
     @State var title : String = "UPick."
     @State var animateTitle : String = ""
     @State var indexValue : Int = 0
-    @State var timeInterval : TimeInterval = 0.25
+    @State var timeInterval : TimeInterval = 0.2
     
     var body: some View {
         

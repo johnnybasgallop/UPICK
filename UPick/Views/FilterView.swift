@@ -11,11 +11,13 @@ import WrappingHStack
 struct FilterView: View {
     @State private var query: String = ""
     @StateObject var apiController = APIController()
-    @State var minYear : Int = 1980
-    @State var maxYear : Int = 2023
+    @Binding var minYear : Int
+    @Binding var maxYear : Int
     @Binding var example : Bool
     @Binding var movies : [Movie]
-    @State var Genre : [String] = ["27"]
+    @Binding var Genre : [String]
+    
+    @Binding var isLoading : Bool
     
     @Environment(\.dismiss) var dismiss
     
@@ -30,6 +32,9 @@ struct FilterView: View {
             
         }
         .onDisappear{
+                
+            isLoading = true
+            
             apiController.getData(FilterState : Filter(genres: Genre, services: ["netflix"], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
                 if let error = error {
                     
@@ -38,7 +43,8 @@ struct FilterView: View {
                     // The data retrieval and processing are complete, but no movie data is returned here
                     self.movies = apiController.Movies
                     print("Data retrieval and processing completed")
-
+                    
+                    isLoading = false
                     
                 }
             }
@@ -108,6 +114,8 @@ struct GenreBox : View {
     
     var body: some View {
         
+      
+        
         Button(action: {
             isSelected.toggle()
             
@@ -115,9 +123,9 @@ struct GenreBox : View {
             
         }) {
             Text(text)
-                .foregroundColor(isSelected ? .white : .black)
+                .foregroundColor(Genre.contains("\(id)") ? .white : .black)
                 .padding()
-                .background(isSelected ? Color.black : Color.white)
+                .background(Genre.contains("\(id)") ? .black : .white)
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 13)

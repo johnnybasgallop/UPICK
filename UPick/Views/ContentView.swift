@@ -18,14 +18,20 @@ struct ContentView: View {
     @State private var showingFilter : Bool = false
     @State var movies : [Movie] = []
     @State var example : Bool = false
+    @State var isLoading : Bool = false
+    @State var Genre : [String] = [""]
+    
+    @State var minYear : Int = 1980
+    @State var maxYear : Int = 2023
+    
     
     var body: some View {
         VStack(spacing: 0) {
             
-            TopBar(example: $example, movies: $movies)
+            TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, minYear: $minYear, maxYear: $maxYear)
        
             
-            MovieScroll(AboutShowing: $AboutShowing, descriptionState: $descriptionState, movies: $movies)
+            MovieScroll(AboutShowing: $AboutShowing, descriptionState: $descriptionState, movies: $movies, isLoading: $isLoading)
             
         }.frame(height: screenHeight)
         

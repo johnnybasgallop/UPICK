@@ -10,6 +10,12 @@ import SwiftUI
 struct TopBar : View {
     @Binding var example : Bool
     @Binding var movies : [Movie]
+    @Binding var isLoading : Bool
+    @Binding var Genre : [String]
+    
+    @Binding var minYear : Int
+    @Binding var maxYear : Int
+    
     var body: some View {
         
             HStack {
@@ -18,7 +24,7 @@ struct TopBar : View {
  
                     
                 Spacer()
-                FilterButton(example: $example, movies: $movies)
+                FilterButton(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre ,minYear: $minYear, maxYear: $maxYear)
             }
             .padding(.horizontal, 30) 
             .frame(height: screenHeight * 0.07)
@@ -34,6 +40,11 @@ struct FilterButton : View {
     @StateObject var apiController = APIController()
     @Binding var example : Bool
     @Binding var movies : [Movie]
+    @Binding var isLoading : Bool
+    @Binding var Genre : [String]
+    
+    @Binding var minYear : Int
+    @Binding var maxYear : Int
     
     var body: some View {
         Button(
@@ -47,7 +58,7 @@ struct FilterButton : View {
             })
     
         .sheet(isPresented: $showingFilter){
-            FilterView(example: $example, movies: $movies)
+            FilterView(minYear: $minYear, maxYear: $maxYear, example: $example, movies: $movies, Genre: $Genre, isLoading: $isLoading)
         }
     }
 }
