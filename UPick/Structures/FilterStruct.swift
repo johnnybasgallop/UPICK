@@ -11,6 +11,8 @@ import Foundation
 struct Filter : Hashable {
     var genres : [String]
     var services : [String]
+    var minYear : Int
+    var maxYear : Int
     var isMovie : Bool
 }
 

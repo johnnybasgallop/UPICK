@@ -12,7 +12,7 @@ var tmdbAPIKey : String = "15d2ea6d0dc1d476efbca3eba2b9bbfb"
 
 class APIController : ObservableObject {
     
-    @Published var FilterState : Filter = Filter(genres: ["10749,35"], services: ["netflix"], isMovie: true)
+   
     @Published var Movies : [Movie] = []
     @Published var MovieNames : [String] = []
     @Published var PosterPaths : [String] = []
@@ -31,14 +31,16 @@ class APIController : ObservableObject {
     ]
     
     
-    func getData(completion: @escaping (Error?) -> Void) {
+    func getData(FilterState : Filter ,completion: @escaping (Error?) -> Void) {
         let url = "https://streaming-availability.p.rapidapi.com/search/filters"
         
         let Params: [String: String] = [
-            "services": "\(self.FilterState.services[0])",
+            "services": "\(FilterState.services[0])",
             "country": "gb",
-            "genres": "\(self.FilterState.genres[0])",
-            "show_type": self.FilterState.isMovie ? "movie" : "series",
+            "genres": "\(FilterState.genres[0])",
+            "show_type": FilterState.isMovie ? "movie" : "series",
+            "year_min" : "\(FilterState.minYear)",
+            "year_max" : "\(FilterState.maxYear)",
             "show_original_language": "en"
         ]
         

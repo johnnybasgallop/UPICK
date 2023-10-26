@@ -11,16 +11,39 @@ import WrappingHStack
 struct FilterView: View {
     @State private var query: String = ""
     @StateObject var apiController = APIController()
+    @State var minYear : Int = 1980
+    @State var maxYear : Int = 2023
+    @Binding var example : Bool
+    @Binding var movies : [Movie]
+    
     @Environment(\.dismiss) var dismiss
+    
     
     var body: some View {
         ScrollView{
             
             GenreSelect()
             
-            YearSliders()
+            YearSliders(minYear: $minYear, maxYear: $maxYear)
             
             
+        }
+        .onDisappear{
+            apiController.getData(FilterState : Filter(genres: ["27"], services: ["netflix"], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
+                if let error = error {
+                    
+                    print("Error: \(error)")
+                } else {
+                    // The data retrieval and processing are complete, but no movie data is returned here
+                    self.movies = apiController.Movies
+                    print("Data retrieval and processing completed")
+
+                    
+                }
+            }
+            
+            example.toggle()
+
         }
     }
 }
@@ -105,8 +128,12 @@ struct GenreBox : View {
 
 
 struct YearSliders : View {
-    @State var minYear : Int = 1980
-    @State var maxYear : Int = 2023
+    @StateObject var apiController = APIController()
+    
+    @Binding var minYear : Int
+    @Binding var maxYear : Int
+    
+
     
     
     var body: some View {
@@ -124,7 +151,11 @@ struct YearSliders : View {
                     ForEach(1920..<2024, id: \.self ){ year in
                         Text(String(year)).tag(String(year))
                     }
-                }.pickerStyle(.wheel)
+                }
+                .onChange(of: minYear){change in
+                    minYear = change
+                }
+                .pickerStyle(.wheel)
                     .frame(width: screenWidth / 2.2, height: 150)
                 
                 
@@ -133,7 +164,11 @@ struct YearSliders : View {
                         
                         Text(String(year)).tag(String(year))
                     }
-                }.pickerStyle(.wheel)
+                }
+                .onChange(of: maxYear){change in
+                  maxYear = change
+                }
+                .pickerStyle(.wheel)
                     .frame(width: screenWidth / 2.2, height: 150)
                 
             }.padding(.vertical, 20)
@@ -147,8 +182,3 @@ struct YearSliders : View {
 
 
 
-struct FilterView_Previews: PreviewProvider {
-    static var previews: some View {
-        FilterView()
-    }
-}

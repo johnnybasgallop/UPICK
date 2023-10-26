@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TopBar : View {
+    @Binding var example : Bool
+    @Binding var movies : [Movie]
     var body: some View {
         
             HStack {
@@ -16,7 +18,7 @@ struct TopBar : View {
  
                     
                 Spacer()
-                FilterButton()
+                FilterButton(example: $example, movies: $movies)
             }
             .padding(.horizontal, 30) 
             .frame(height: screenHeight * 0.07)
@@ -29,6 +31,9 @@ struct TopBar : View {
 
 struct FilterButton : View {
     @State private var showingFilter : Bool = false
+    @StateObject var apiController = APIController()
+    @Binding var example : Bool
+    @Binding var movies : [Movie]
     
     var body: some View {
         Button(
@@ -40,15 +45,17 @@ struct FilterButton : View {
                     .font(.system(size: 32))
                     .foregroundColor(.black)
             })
+    
         .sheet(isPresented: $showingFilter){
-            FilterView()
+            FilterView(example: $example, movies: $movies)
         }
     }
 }
 
 
-struct TopBar_Previews: PreviewProvider {
-    static var previews: some View {
-        TopBar()
-    }
-}
+//struct TopBar_Previews: PreviewProvider {
+//    @State static var e : Bool = false
+//    static var previews: some View {
+//        TopBar(example: $e)
+//    }
+//}
