@@ -12,7 +12,7 @@ struct TopBar : View {
     @Binding var movies : [Movie]
     @Binding var isLoading : Bool
     @Binding var Genre : [String]
-    
+    @Binding var streamingServices : [String]
     @Binding var minYear : Int
     @Binding var maxYear : Int
     
@@ -24,7 +24,7 @@ struct TopBar : View {
  
                     
                 Spacer()
-                FilterButton(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre ,minYear: $minYear, maxYear: $maxYear)
+                FilterButton(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre ,streamingServices: $streamingServices, minYear: $minYear, maxYear: $maxYear)
             }
             .padding(.horizontal, 30) 
             .frame(height: screenHeight * 0.07)
@@ -42,6 +42,7 @@ struct FilterButton : View {
     @Binding var movies : [Movie]
     @Binding var isLoading : Bool
     @Binding var Genre : [String]
+    @Binding var streamingServices : [String]
     
     @Binding var minYear : Int
     @Binding var maxYear : Int
@@ -58,7 +59,7 @@ struct FilterButton : View {
             })
     
         .sheet(isPresented: $showingFilter){
-            FilterView(minYear: $minYear, maxYear: $maxYear, example: $example, movies: $movies, Genre: $Genre, isLoading: $isLoading)
+            FilterView(minYear: $minYear, maxYear: $maxYear, example: $example, movies: $movies, Genre: $Genre, streamingServices: $streamingServices, isLoading: $isLoading)
         }
     }
 }

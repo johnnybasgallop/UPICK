@@ -16,6 +16,7 @@ struct FilterView: View {
     @Binding var example : Bool
     @Binding var movies : [Movie]
     @Binding var Genre : [String]
+    @Binding var streamingServices : [String]
     
     @Binding var isLoading : Bool
     
@@ -24,6 +25,7 @@ struct FilterView: View {
     
     var body: some View {
         ScrollView{
+            streamingServiceSelect(streamingServices: $streamingServices)
             
             GenreSelect(Genre: $Genre)
             
@@ -32,10 +34,25 @@ struct FilterView: View {
             
         }
         .onDisappear{
+            
+            var servicesConcat : String = ""
+            
+            for service in streamingServices {
+                if service != streamingServices.last{
+                    var service2 = service + ","
+                    servicesConcat.append(service2)
+                }
                 
+                else{
+                    servicesConcat.append(service)
+                }
+            }
+            
+            print(servicesConcat)
+            
             isLoading = true
             
-            apiController.getData(FilterState : Filter(genres: Genre, services: ["netflix"], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
+            apiController.getData(FilterState : Filter(genres: Genre, services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
                 if let error = error {
                     
                     print("Error: \(error)")
@@ -50,10 +67,92 @@ struct FilterView: View {
             }
             
             example.toggle()
-
+            
         }
     }
 }
+
+
+struct streamingServiceSelect : View {
+    
+    @Binding var streamingServices : [String]
+    
+    let StreamingServices : [[String: Any]] = [
+        ["name" : "netflix", "img": "https://logo.clearbit.com/Netflix.com"],
+        ["name" : "prime", "img": "https://logo.clearbit.com/primevideo.com"],
+        ["name" : "apple", "img": "https://logo.clearbit.com/apple.com"],
+    ]
+    
+    var body: some View {
+        VStack{
+            HStack{
+                Text("Services")
+                    .font(.system(size: 35, weight: .bold
+                                 ))
+                    .padding()
+                Spacer()
+            }
+            WrappingHStack(StreamingServices, id: \.self){ service in
+                ServiceButton(streamingServices: $streamingServices, text: service["name"] as! String, img: service["img"] as! String)
+            }
+            .padding(20)
+            .frame(width: screenWidth * 0.95)
+            Divider()
+        }
+    }
+}
+
+
+struct ServiceButton : View {
+    @State var isSelected : Bool = false
+    @Binding var streamingServices : [String]
+    var text : String
+    var img : String
+    var body: some View {
+        
+        
+        
+        
+        
+        Button(action: {
+            
+            if !isSelected{
+                streamingServices.append(text)
+            }
+            
+            if isSelected{
+                streamingServices.removeAll{$0 == text}
+            }
+            
+            print(streamingServices)
+            isSelected.toggle()
+            
+            
+        }) {
+            
+
+            Text(text)
+                .foregroundColor(streamingServices.contains(text) ? .white : .black)
+                .padding()
+                .background(streamingServices.contains(text) ? .black : .white)
+                .cornerRadius(10)
+                .overlay(
+                    ZStack{
+                        
+                        
+                        RoundedRectangle(cornerRadius: 13)
+                            .stroke(Color.black, lineWidth: 2) // Add rounded border
+                    }
+                )
+            
+        }
+        .padding(.horizontal, 2)
+        .padding(.vertical, 5)
+        
+    }
+    
+}
+
 
 
 struct GenreSelect : View {
@@ -114,7 +213,7 @@ struct GenreBox : View {
     
     var body: some View {
         
-      
+        
         
         Button(action: {
             isSelected.toggle()
@@ -145,7 +244,7 @@ struct YearSliders : View {
     @Binding var minYear : Int
     @Binding var maxYear : Int
     
-
+    
     
     
     var body: some View {
@@ -168,7 +267,7 @@ struct YearSliders : View {
                     minYear = change
                 }
                 .pickerStyle(.wheel)
-                    .frame(width: screenWidth / 2.2, height: 150)
+                .frame(width: screenWidth / 2.2, height: 150)
                 
                 
                 Picker("Min year", selection: $maxYear) {
@@ -178,10 +277,10 @@ struct YearSliders : View {
                     }
                 }
                 .onChange(of: maxYear){change in
-                  maxYear = change
+                    maxYear = change
                 }
                 .pickerStyle(.wheel)
-                    .frame(width: screenWidth / 2.2, height: 150)
+                .frame(width: screenWidth / 2.2, height: 150)
                 
             }.padding(.vertical, 20)
                 .offset(y: -10)
@@ -192,5 +291,18 @@ struct YearSliders : View {
     }
 }
 
-
+struct FilterView_Previews: PreviewProvider {
+    static var previews: some View {
+        FilterView(
+            minYear: .constant(2000),
+            maxYear: .constant(2022),
+            example: .constant(true),
+            movies: .constant([]),
+            Genre: .constant(["28", "35"]),
+            streamingServices: .constant(["netflix"]),
+            isLoading: .constant(false)
+        )
+        
+    }
+}
 
