@@ -79,8 +79,13 @@ struct streamingServiceSelect : View {
     
     let StreamingServices : [[String: Any]] = [
         ["name" : "netflix", "img": "https://logo.clearbit.com/Netflix.com"],
-        ["name" : "prime", "img": "https://logo.clearbit.com/primevideo.com"],
-        ["name" : "apple", "img": "https://logo.clearbit.com/apple.com"],
+        ["name" : "prime.subscription", "img": "https://logo.clearbit.com/primevideo.com"],
+        ["name" : "apple.subscription", "img": "https://logo.clearbit.com/apple.com"],
+        ["name" : "iplayer", "img": "https://logo.clearbit.com/bbcIplayer.com"],
+        ["name" : "disney.subscription", "img": "https://logo.clearbit.com/disney.com"],
+        ["name" : "now", "img": "https://logo.clearbit.com/nowtv.com"],
+        ["name" : "paramount.subscription", "img": "https://logo.clearbit.com/paramount.com"],
+       
     ]
     
     var body: some View {
@@ -103,55 +108,52 @@ struct streamingServiceSelect : View {
 }
 
 
-struct ServiceButton : View {
-    @State var isSelected : Bool = false
-    @Binding var streamingServices : [String]
-    var text : String
-    var img : String
+struct ServiceButton: View {
+    @State var isSelected: Bool = false
+    @Binding var streamingServices: [String]
+    var text: String
+    var img: String
+    
     var body: some View {
-        
-        
-        
-        
-        
         Button(action: {
-            
-            if !isSelected{
+            if !isSelected {
                 streamingServices.append(text)
             }
             
-            if isSelected{
-                streamingServices.removeAll{$0 == text}
+            if isSelected {
+                streamingServices.removeAll { $0 == text }
             }
             
             print(streamingServices)
             isSelected.toggle()
-            
-            
         }) {
+            // Image should be placed after the background overlay
+            AsyncImage(url: URL(string: img)) { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 60, height: 60)
+//                    .padding()
+                    .cornerRadius(8)
+                    
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 100, height: 100)
+            .background(streamingServices.contains(text) ? Color.black : Color.white)
+            .cornerRadius(13)
             
-
-            Text(text)
-                .foregroundColor(streamingServices.contains(text) ? .white : .black)
-                .padding()
-                .background(streamingServices.contains(text) ? .black : .white)
-                .cornerRadius(10)
-                .overlay(
-                    ZStack{
-                        
-                        
-                        RoundedRectangle(cornerRadius: 13)
-                            .stroke(Color.black, lineWidth: 2) // Add rounded border
-                    }
-                )
-            
+            .overlay(
+                RoundedRectangle(cornerRadius: 13)
+                    .stroke(Color.black, lineWidth: 2)
+                
+                    .cornerRadius(13)
+            )
         }
         .padding(.horizontal, 2)
         .padding(.vertical, 5)
-        
     }
-    
 }
+
 
 
 

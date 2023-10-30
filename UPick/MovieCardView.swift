@@ -14,7 +14,7 @@ struct MovieCardView: View {
     
     @Binding var AboutShowing : Bool
     @Binding var descriptionState : String
-    
+    @Binding var imageState : String
     
     var title : String
     var Img : String
@@ -47,7 +47,7 @@ struct MovieCardView: View {
             HStack{
                 AvailableStreamingServicesGroup(StreamingServices: StreamingServices)
                 Spacer()
-                MoreInfoButton(AboutShowing: $AboutShowing, description: description, title: title, descriptionState: $descriptionState)
+                MoreInfoButton(AboutShowing: $AboutShowing, imageState: $imageState, description: description, title: title, img: Img, descriptionState: $descriptionState)
             }
             
             
@@ -65,9 +65,11 @@ struct MovieCardView: View {
 struct MoreInfoButton : View {
     
     @Binding var AboutShowing : Bool
+    @Binding var imageState : String
     
     var description : String
     var title : String
+    var img : String
     
     
     @Binding var descriptionState : String
@@ -78,6 +80,7 @@ struct MoreInfoButton : View {
             print("more info pressed for movie: \(title)")
             AboutShowing.toggle()
             descriptionState = description
+            imageState = img
             print(descriptionState)
             
         }, label: {
@@ -90,7 +93,8 @@ struct MoreInfoButton : View {
             
         })
         .sheet(isPresented: $AboutShowing){
-            MovieInfoView(description: $descriptionState)
+            MovieInfoView(description: $descriptionState, imageState: $imageState)
+
         }
         
     }
@@ -130,10 +134,18 @@ struct StreamingServiceIndicator : View {
                 } placeholder: {
                     ProgressView()
                 }
-                .cornerRadius(15)
+                .cornerRadius(13)
                 
             case "apple":
                 AsyncImage(url: URL(string: "https://logo.clearbit.com/apple.com")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 30, height: 30)
+                } placeholder: {
+                    ProgressView()
+                }
+                .cornerRadius(18)
+                
+            case "iplayer":
+                AsyncImage(url: URL(string: "https://logo.clearbit.com/bbcIplayer.com")) { image in
                     image.resizable().aspectRatio(contentMode: .fit).frame(width: 30, height: 30)
                 } placeholder: {
                     ProgressView()
@@ -149,11 +161,30 @@ struct StreamingServiceIndicator : View {
                 .cornerRadius(30)
                 
             case "disney":
+                AsyncImage(url: URL(string: "https://logo.clearbit.com/disney.com")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                } placeholder: {
+                    ProgressView()
+                }
+                .cornerRadius(30)
                 
-                Image("DisneyIcon")
-                    .resizable().aspectRatio(contentMode: .fit).frame(width: 70, height: 70)
-                        .cornerRadius(30)
-              
+            case "now":
+                AsyncImage(url: URL(string: "https://logo.clearbit.com/nowtv.com")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                } placeholder: {
+                    ProgressView()
+                }
+                .cornerRadius(30)
+                
+            case "paramount":
+                AsyncImage(url: URL(string: "https://logo.clearbit.com/paramount.com")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                } placeholder: {
+                    ProgressView()
+                }
+                .cornerRadius(30)
+                
+                
                 
             default:
                 Text("?")
@@ -193,6 +224,6 @@ struct MovieCardView_Previews: PreviewProvider {
     @State static var streamingServices : [String] = ["netflix", "apple", "prime", "disney"]
     
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, descriptionState: $descriptionState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices)
+        MovieCardView(AboutShowing: $AboutShowingPR, descriptionState: $descriptionState, imageState: $imgPR, title: title, Img: imgPR, description: description, StreamingServices: streamingServices)
     }
 }
