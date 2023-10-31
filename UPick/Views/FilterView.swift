@@ -25,6 +25,7 @@ struct FilterView: View {
     
     var body: some View {
         ScrollView{
+            
             streamingServiceSelect(streamingServices: $streamingServices)
             
             GenreSelect(Genre: $Genre)
@@ -36,6 +37,8 @@ struct FilterView: View {
         .onDisappear{
             
             var servicesConcat : String = ""
+            var genreConcat : String = ""
+            
             
             for service in streamingServices {
                 if service != streamingServices.last{
@@ -48,11 +51,26 @@ struct FilterView: View {
                 }
             }
             
+            
+            
+            for genre in Genre {
+                if genre != Genre.last {
+                    var genre2 = genre + ","
+                    genreConcat.append(genre2)
+                }
+                
+                else {
+                    genreConcat.append(genre)
+                }
+            }
+            
+            
+            print(genreConcat)
             print(servicesConcat)
             
             isLoading = true
             
-            apiController.getData(FilterState : Filter(genres: Genre, services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
+            apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
                 if let error = error {
                     
                     print("Error: \(error)")
@@ -218,9 +236,18 @@ struct GenreBox : View {
         
         
         Button(action: {
+            
+            if !isSelected {
+                Genre.append("\(id)")
+            }
+            
+            else {
+                Genre.removeAll{$0 == "\(id)"}
+            }
+            
             isSelected.toggle()
             
-            Genre[0] = "\(id)"
+            
             
         }) {
             Text(text)

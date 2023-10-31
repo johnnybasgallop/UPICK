@@ -13,8 +13,7 @@ import SwiftUIGradientBlur
 struct MovieCardView: View {
     
     @Binding var AboutShowing : Bool
-    @Binding var descriptionState : String
-    @Binding var imageState : String
+    @Binding var MovieState : Movie
     
     var title : String
     var Img : String
@@ -47,7 +46,7 @@ struct MovieCardView: View {
             HStack{
                 AvailableStreamingServicesGroup(StreamingServices: StreamingServices)
                 Spacer()
-                MoreInfoButton(AboutShowing: $AboutShowing, imageState: $imageState, description: description, title: title, img: Img, descriptionState: $descriptionState)
+                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img )
             }
             
             
@@ -65,23 +64,22 @@ struct MovieCardView: View {
 struct MoreInfoButton : View {
     
     @Binding var AboutShowing : Bool
-    @Binding var imageState : String
+    @Binding var MovieState : Movie
     
     var description : String
     var title : String
     var img : String
     
-    
-    @Binding var descriptionState : String
+
     
     var body: some View {
         Button(action: {
             
             print("more info pressed for movie: \(title)")
             AboutShowing.toggle()
-            descriptionState = description
-            imageState = img
-            print(descriptionState)
+            MovieState.description = description
+            MovieState.img = img
+            print(MovieState.description)
             
         }, label: {
             Text("More Info")
@@ -93,7 +91,7 @@ struct MoreInfoButton : View {
             
         })
         .sheet(isPresented: $AboutShowing){
-            MovieInfoView(description: $descriptionState, imageState: $imageState)
+            MovieInfoView(MovieState: $MovieState)
 
         }
         
@@ -223,7 +221,9 @@ struct MovieCardView_Previews: PreviewProvider {
     
     @State static var streamingServices : [String] = ["netflix", "apple", "prime", "disney"]
     
+    @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""])
+    
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, descriptionState: $descriptionState, imageState: $imgPR, title: title, Img: imgPR, description: description, StreamingServices: streamingServices)
+        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices)
     }
 }

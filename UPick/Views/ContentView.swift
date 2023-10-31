@@ -14,8 +14,7 @@ var screenWidth = UIScreen.main.bounds.width
 struct ContentView: View {
     
     @State private var AboutShowing : Bool = false
-    @State private var descriptionState : String = ""
-    @State private var imageState : String = ""
+    @State private var MovieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""])
     @State private var showingFilter : Bool = false
     @State var movies : [Movie] = []
     @State var example : Bool = false
@@ -33,7 +32,7 @@ struct ContentView: View {
             TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, streamingServices: $StreamingServices, minYear: $minYear, maxYear: $maxYear)
        
             
-            MovieScroll(AboutShowing: $AboutShowing, descriptionState: $descriptionState, imageState: $imageState, movies: $movies, isLoading: $isLoading)
+            MovieScroll(AboutShowing: $AboutShowing, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
             
         }.frame(height: screenHeight)
         
