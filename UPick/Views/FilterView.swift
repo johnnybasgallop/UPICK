@@ -131,15 +131,17 @@ struct ServiceButton: View {
     
     var body: some View {
         Button(action: {
-            if !isSelected {
+            
+            if streamingServices.contains(text) == false {
                 streamingServices.append(text)
             }
             
-            if isSelected {
+            else if streamingServices.contains(text) {
                 streamingServices.removeAll { $0 == text }
             }
             
             isSelected.toggle()
+            
         }) {
             // Image should be placed after the background overlay
             AsyncImage(url: URL(string: img)) { image in
@@ -233,11 +235,11 @@ struct GenreBox : View {
         
         Button(action: {
             
-            if !isSelected {
+            if Genre.contains("\(id)") == false {
                 Genre.append("\(id)")
             }
             
-            else {
+            else if Genre.contains("\(id)") {
                 Genre.removeAll{$0 == "\(id)"}
             }
             
