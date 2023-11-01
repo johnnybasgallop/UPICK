@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MovieInfoView: View {
     @Binding var MovieState : Movie
-
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -25,7 +25,7 @@ struct MovieInfoView: View {
             
         }
     }
-        
+    
 }
 
 
@@ -44,6 +44,7 @@ struct MovieBrowseView : View {
                         .cornerRadius(10)
                         .frame(width: 120)
                         .padding()
+                        .offset(x: 10)
                     
                     
                 } placeholder: {
@@ -52,26 +53,38 @@ struct MovieBrowseView : View {
                 
                 Spacer()
                 
-                VStack{
-                    Text(MovieState.title)
-                    
-                }.offset(x: -40)
-            }
-                
-            Text(MovieState.description)
+                MovieInfo(MovieState: $MovieState)
                     .padding(20)
-                    .font(.system(size: 20, weight: .medium))
-                    
-                
-                
-                
-                Spacer()
             }
+            
+            Text(MovieState.description)
+                .padding(20)
+                .font(.system(size: 20, weight: .medium))
+            
+            
+            
+            
+            Spacer()
+        }
         
         .offset(y: 40)
+        
+    }
+}
+
+
+struct MovieInfo : View {
+    @Binding var MovieState : Movie
+    var body: some View {
+        VStack{
+            Text(MovieState.title).font(.system(size: 27, weight: .semibold))
+            AvailableStreamingServicesGroup(StreamingServices: MovieState.StreamingServices).padding()
             
+        }.frame(width: 200)
+        
+        
     }
-    }
+}
 
 
 

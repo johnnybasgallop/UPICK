@@ -30,7 +30,7 @@ struct ContentView: View {
         VStack(spacing: 0) {
             
             TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, streamingServices: $StreamingServices, minYear: $minYear, maxYear: $maxYear)
-       
+            
             
             MovieScroll(AboutShowing: $AboutShowing, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
             

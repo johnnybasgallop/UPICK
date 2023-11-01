@@ -25,7 +25,7 @@ struct MovieScroll: View {
                 
                 Text("Search for a movie...").foregroundColor(.gray)
                     .offset(y: 300)
-                   
+                
                 
                 
             }

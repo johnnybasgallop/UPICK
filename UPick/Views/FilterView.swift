@@ -65,14 +65,11 @@ struct FilterView: View {
             }
             
             
-            print(genreConcat)
-            print(servicesConcat)
             
             isLoading = true
             
             apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
                 if let error = error {
-                    
                     print("Error: \(error)")
                 } else {
                     // The data retrieval and processing are complete, but no movie data is returned here
@@ -103,7 +100,7 @@ struct streamingServiceSelect : View {
         ["name" : "disney.subscription", "img": "https://logo.clearbit.com/disney.com"],
         ["name" : "now", "img": "https://logo.clearbit.com/nowtv.com"],
         ["name" : "paramount.subscription", "img": "https://logo.clearbit.com/paramount.com"],
-       
+        
     ]
     
     var body: some View {
@@ -142,7 +139,6 @@ struct ServiceButton: View {
                 streamingServices.removeAll { $0 == text }
             }
             
-            print(streamingServices)
             isSelected.toggle()
         }) {
             // Image should be placed after the background overlay
@@ -150,9 +146,9 @@ struct ServiceButton: View {
                 image.resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 60, height: 60)
-//                    .padding()
+                //                    .padding()
                     .cornerRadius(8)
-                    
+                
             } placeholder: {
                 ProgressView()
             }

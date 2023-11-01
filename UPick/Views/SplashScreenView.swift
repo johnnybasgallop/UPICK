@@ -22,7 +22,7 @@ struct SplashScreenView: View {
         }
         
         else {
-
+            
             Text(animateTitle).font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 50))
                 .onAppear{
                     startAnimation()

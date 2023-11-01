@@ -12,7 +12,7 @@ var tmdbAPIKey : String = "15d2ea6d0dc1d476efbca3eba2b9bbfb"
 
 class APIController : ObservableObject {
     
-   
+    
     @Published var Movies : [Movie] = []
     @Published var MovieNames : [String] = []
     @Published var PosterPaths : [String] = []
@@ -67,11 +67,11 @@ class APIController : ObservableObject {
                                let gbInfo = streamingInfo["gb"] as? [[String: Any]] {
                                 
                                 for serviceInfo in gbInfo {
-                                       if let serviceName = serviceInfo["service"] as? String {
-                                           if serviceArray.contains(serviceName) == false {
-                                               serviceArray.append(serviceName)
-                                           }
-                                         
+                                    if let serviceName = serviceInfo["service"] as? String {
+                                        if serviceArray.contains(serviceName) == false {
+                                            serviceArray.append(serviceName)
+                                        }
+                                        
                                     }
                                 }
                                 
@@ -83,7 +83,6 @@ class APIController : ObservableObject {
                                 self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray) { movie in
                                     if let movie = movie {
                                         self.Movies.append(movie)
-                                        print(movie.StreamingServices)
                                     }
                                     dispatchGroup.leave()
                                 }
@@ -145,13 +144,13 @@ class APIController : ObservableObject {
                 }
             }
     }
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
     // Example usage
-
+    
     
 }

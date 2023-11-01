@@ -18,17 +18,17 @@ struct TopBar : View {
     
     var body: some View {
         
-            HStack {
-                Text("UPick.")
-                    .font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 40))
- 
-                    
-                Spacer()
-                FilterButton(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre ,streamingServices: $streamingServices, minYear: $minYear, maxYear: $maxYear)
-            }
-            .padding(.horizontal, 30) 
-            .frame(height: screenHeight * 0.07)
-                
+        HStack {
+            Text("UPick.")
+                .font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 40))
+            
+            
+            Spacer()
+            FilterButton(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre ,streamingServices: $streamingServices, minYear: $minYear, maxYear: $maxYear)
+        }
+        .padding(.horizontal, 30)
+        .frame(height: screenHeight * 0.07)
+        
         
         
     }
@@ -50,14 +50,13 @@ struct FilterButton : View {
     var body: some View {
         Button(
             action: {
-                print("FilterBtn Pressed")
                 showingFilter.toggle()
             }, label: {
                 Image(systemName: "line.3.horizontal.decrease.circle")
                     .font(.system(size: 32))
                     .foregroundColor(.black)
             })
-    
+        
         .sheet(isPresented: $showingFilter){
             FilterView(minYear: $minYear, maxYear: $maxYear, example: $example, movies: $movies, Genre: $Genre, streamingServices: $streamingServices, isLoading: $isLoading)
         }

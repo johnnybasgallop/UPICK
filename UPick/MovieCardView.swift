@@ -41,12 +41,12 @@ struct MovieCardView: View {
             
             Spacer()
             
-           
+            
             
             HStack{
                 AvailableStreamingServicesGroup(StreamingServices: StreamingServices)
                 Spacer()
-                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img )
+                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices )
             }
             
             
@@ -69,17 +69,19 @@ struct MoreInfoButton : View {
     var description : String
     var title : String
     var img : String
+    var streamingServices : [String]
     
-
+    
     
     var body: some View {
         Button(action: {
             
-            print("more info pressed for movie: \(title)")
             AboutShowing.toggle()
             MovieState.description = description
             MovieState.img = img
-            print(MovieState.description)
+            MovieState.title = title
+            MovieState.StreamingServices = streamingServices
+            
             
         }, label: {
             Text("More Info")
@@ -92,7 +94,7 @@ struct MoreInfoButton : View {
         })
         .sheet(isPresented: $AboutShowing){
             MovieInfoView(MovieState: $MovieState)
-
+            
         }
         
     }
@@ -187,11 +189,11 @@ struct StreamingServiceIndicator : View {
             default:
                 Text("?")
                 
-            
+                
                 
             }
             
-       
+            
             
             
             // Adjust the offset as needed// Adjust the corner radius to your preference
