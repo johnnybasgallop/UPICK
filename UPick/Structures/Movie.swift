@@ -13,4 +13,5 @@ struct Movie : Hashable, Identifiable {
     var img : String
     var description : String
     var StreamingServices : [String]
+    var year : String
 }

@@ -42,7 +42,7 @@ struct MovieScroll: View {
                     VStack(spacing: 0){
                         ForEach(movies, id:  \.self) { movie in
                             VStack{
-                                MovieCardView(AboutShowing: $AboutShowing, MovieState: $MovieState, title: movie.title, Img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500/\(movie.img)", description: movie.description, StreamingServices: movie.StreamingServices)
+                                MovieCardView(AboutShowing: $AboutShowing, MovieState: $MovieState, title: movie.title, Img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500/\(movie.img)", description: movie.description, StreamingServices: movie.StreamingServices, year: movie.year)
                             }.frame(width: screenWidth,height: screenHeight * 0.81)
                             
                         }

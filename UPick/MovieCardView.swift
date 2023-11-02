@@ -19,7 +19,7 @@ struct MovieCardView: View {
     var Img : String
     var description : String
     var StreamingServices : [String]
-    
+    var year : String
     
     
     var body: some View {
@@ -46,7 +46,7 @@ struct MovieCardView: View {
             HStack{
                 AvailableStreamingServicesGroup(StreamingServices: StreamingServices)
                 Spacer()
-                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices )
+                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices, year: year )
             }
             
             
@@ -70,7 +70,7 @@ struct MoreInfoButton : View {
     var title : String
     var img : String
     var streamingServices : [String]
-    
+    var year : String
     
     
     var body: some View {
@@ -81,7 +81,7 @@ struct MoreInfoButton : View {
             MovieState.img = img
             MovieState.title = title
             MovieState.StreamingServices = streamingServices
-            
+            MovieState.year = year
             
         }, label: {
             Text("More Info")
@@ -94,7 +94,7 @@ struct MoreInfoButton : View {
         })
         .sheet(isPresented: $AboutShowing){
             MovieInfoView(MovieState: $MovieState)
-            
+                .presentationDetents([.fraction(0.45), .large])
         }
         
     }
@@ -104,10 +104,13 @@ struct AvailableStreamingServicesGroup : View {
     
     var StreamingServices: [String]
     
+    
     var body: some View{
         HStack(spacing: -12){
+            var newArr = Array(StreamingServices.prefix(4))
             
-            ForEach(StreamingServices, id: \.self) { string in
+            ForEach(newArr, id: \.self) { string in
+                
                 StreamingServiceIndicator(text: string)
             }
             
@@ -223,9 +226,9 @@ struct MovieCardView_Previews: PreviewProvider {
     
     @State static var streamingServices : [String] = ["netflix", "apple", "prime", "disney"]
     
-    @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""])
+    @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], year: "")
     
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices)
+        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017")
     }
 }

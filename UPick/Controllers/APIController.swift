@@ -38,11 +38,11 @@ class APIController : ObservableObject {
             "services": "\(FilterState.services[0])",
             "country": "gb",
             "genres": "\(FilterState.genres[0])",
-            "show_type": FilterState.isMovie ? "movie" : "series",
             "year_min" : "\(FilterState.minYear)",
             "year_max" : "\(FilterState.maxYear)",
             "genres_relation" : "or",
-            "show_original_language": "en"
+            "show_original_language": "en",
+            "show_type": "movie",
         ]
         
         AF.request(url, method: .get, parameters: Params, headers: headers)
@@ -62,8 +62,11 @@ class APIController : ObservableObject {
                             
                             var serviceArray : [String] = []
                             
+                            
+                            
                             if let originalTitle = result["originalTitle"] as? String,
                                let streamingInfo = result["streamingInfo"] as? [String: Any],
+                               let year = result["year"] as? Int,
                                let gbInfo = streamingInfo["gb"] as? [[String: Any]] {
                                 
                                 for serviceInfo in gbInfo {
@@ -80,7 +83,7 @@ class APIController : ObservableObject {
                                 
                                 serviceArray.sort()
                                 
-                                self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray) { movie in
+                                self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray, year: "\(year)") { movie in
                                     if let movie = movie {
                                         self.Movies.append(movie)
                                     }
@@ -103,7 +106,7 @@ class APIController : ObservableObject {
     
     
     
-    func getMovieInfo(movieName: String, apiKey: String, streamingInfo : [String], completion: @escaping (Movie?) -> Void) {
+    func getMovieInfo(movieName: String, apiKey: String, streamingInfo : [String], year : String, completion: @escaping (Movie?) -> Void) {
         // Encode the movie name for the URL using URLComponents
         var components = URLComponents(string: "https://api.themoviedb.org/3/search/movie")
         components?.queryItems = [
@@ -129,7 +132,7 @@ class APIController : ObservableObject {
                            let overview = firstResult["overview"] as? String {
                             
                             // Create a Movie instance with the fetched data
-                            let movie = Movie(title: movieName, img: posterPath, description: overview, StreamingServices: streamingInfo )
+                            let movie = Movie(title: movieName, img: posterPath, description: overview, StreamingServices: streamingInfo, year: year )
                             
                             completion(movie)
                         } else {

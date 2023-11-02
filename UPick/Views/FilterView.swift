@@ -17,7 +17,7 @@ struct FilterView: View {
     @Binding var movies : [Movie]
     @Binding var Genre : [String]
     @Binding var streamingServices : [String]
-    
+    @Binding var isMovie : Bool
     @Binding var isLoading : Bool
     
     @Environment(\.dismiss) var dismiss
@@ -68,11 +68,13 @@ struct FilterView: View {
             
             isLoading = true
             
-            apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: true)) { error in
+            apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: isMovie)) { error in
                 if let error = error {
                     print("Error: \(error)")
                 } else {
                     // The data retrieval and processing are complete, but no movie data is returned here
+                    
+                    
                     self.movies = apiController.Movies
                     print("Data retrieval and processing completed")
                     
@@ -86,6 +88,8 @@ struct FilterView: View {
         }
     }
 }
+
+
 
 
 struct streamingServiceSelect : View {
@@ -327,6 +331,7 @@ struct FilterView_Previews: PreviewProvider {
             movies: .constant([]),
             Genre: .constant(["28", "35"]),
             streamingServices: .constant(["netflix"]),
+            isMovie: .constant(true), 
             isLoading: .constant(false)
         )
         
