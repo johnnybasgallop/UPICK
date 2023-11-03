@@ -61,14 +61,22 @@ class APIController : ObservableObject {
                         for result in results {
                             
                             var serviceArray : [String] = []
-                            
+                            var genreArray : [String] = []
                             
                             
                             if let originalTitle = result["originalTitle"] as? String,
                                let streamingInfo = result["streamingInfo"] as? [String: Any],
+                               let genreInfo = result["genres"] as? [[String: Any]],
                                let year = result["year"] as? Int,
                                let gbInfo = streamingInfo["gb"] as? [[String: Any]] {
                                 
+                                for genre in genreInfo {
+                                    if let genreName = genre["name"] as? String {
+                                        genreArray.append(genreName)
+                                    }
+                                    
+                                }
+                             
                                 for serviceInfo in gbInfo {
                                     if let serviceName = serviceInfo["service"] as? String {
                                         if serviceArray.contains(serviceName) == false {
@@ -83,7 +91,7 @@ class APIController : ObservableObject {
                                 
                                 serviceArray.sort()
                                 
-                                self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray, year: "\(year)") { movie in
+                                self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray, year: "\(year)", genres: genreArray) { movie in
                                     if let movie = movie {
                                         self.Movies.append(movie)
                                     }
@@ -106,7 +114,7 @@ class APIController : ObservableObject {
     
     
     
-    func getMovieInfo(movieName: String, apiKey: String, streamingInfo : [String], year : String, completion: @escaping (Movie?) -> Void) {
+    func getMovieInfo(movieName: String, apiKey: String, streamingInfo : [String], year : String, genres : [String], completion: @escaping (Movie?) -> Void) {
         // Encode the movie name for the URL using URLComponents
         var components = URLComponents(string: "https://api.themoviedb.org/3/search/movie")
         components?.queryItems = [
@@ -132,7 +140,7 @@ class APIController : ObservableObject {
                            let overview = firstResult["overview"] as? String {
                             
                             // Create a Movie instance with the fetched data
-                            let movie = Movie(title: movieName, img: posterPath, description: overview, StreamingServices: streamingInfo, year: year )
+                            let movie = Movie(title: movieName, img: posterPath, description: overview, StreamingServices: streamingInfo, genres: genres, year: year  )
                             
                             completion(movie)
                         } else {

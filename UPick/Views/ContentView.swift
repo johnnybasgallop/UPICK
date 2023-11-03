@@ -14,7 +14,7 @@ var screenWidth = UIScreen.main.bounds.width
 struct ContentView: View {
     
     @State private var AboutShowing : Bool = false
-    @State private var MovieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], year: "2017")
+    @State private var MovieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "2017")
     @State private var showingFilter : Bool = false
     @State var movies : [Movie] = []
     @State var example : Bool = false
@@ -24,6 +24,7 @@ struct ContentView: View {
     @State var isMovie : Bool = true
     @State var minYear : Int = 1980
     @State var maxYear : Int = 2023
+    
     
     
     var body: some View {

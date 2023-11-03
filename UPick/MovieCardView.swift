@@ -20,7 +20,7 @@ struct MovieCardView: View {
     var description : String
     var StreamingServices : [String]
     var year : String
-    
+    var genres : [String]
     
     var body: some View {
         
@@ -46,7 +46,7 @@ struct MovieCardView: View {
             HStack{
                 AvailableStreamingServicesGroup(StreamingServices: StreamingServices)
                 Spacer()
-                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices, year: year )
+                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices, year: year, genres: genres )
             }
             
             
@@ -71,7 +71,7 @@ struct MoreInfoButton : View {
     var img : String
     var streamingServices : [String]
     var year : String
-    
+    var genres : [String]
     
     var body: some View {
         Button(action: {
@@ -82,6 +82,7 @@ struct MoreInfoButton : View {
             MovieState.title = title
             MovieState.StreamingServices = streamingServices
             MovieState.year = year
+            MovieState.genres = genres
             
         }, label: {
             Text("More Info")
@@ -133,11 +134,11 @@ struct StreamingServiceIndicator : View {
             switch text{
             case "netflix":
                 AsyncImage(url: URL(string: "https://logo.clearbit.com/Netflix.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 25, height: 25)
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
                 } placeholder: {
                     ProgressView()
                 }
-                .cornerRadius(13)
+                .cornerRadius(35)
                 
             case "apple":
                 AsyncImage(url: URL(string: "https://logo.clearbit.com/apple.com")) { image in
@@ -205,7 +206,7 @@ struct StreamingServiceIndicator : View {
         .frame(width: 50, height: 50)
         .overlay(
             RoundedRectangle(cornerRadius: 45)
-                .stroke(Color(UIColor.gray), lineWidth: 2)
+                .stroke(Color(UIColor.gray), lineWidth: 0.8)
         )
         .background(.white)
         .offset(x: -15)
@@ -226,9 +227,9 @@ struct MovieCardView_Previews: PreviewProvider {
     
     @State static var streamingServices : [String] = ["netflix", "apple", "prime", "disney"]
     
-    @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], year: "")
+    @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "")
     
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017")
+        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017", genres: [""])
     }
 }
