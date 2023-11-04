@@ -19,8 +19,13 @@ struct TopBar : View {
     var body: some View {
         
         HStack {
-            Text("UPick.")
-                .font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 40))
+            
+            BookMarkBtn()
+            
+            Spacer()
+            
+            Text("UPick")
+                .font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 32))
             
             
             Spacer()
@@ -52,8 +57,8 @@ struct FilterButton : View {
             action: {
                 showingFilter.toggle()
             }, label: {
-                Image(systemName: "line.3.horizontal.decrease.circle")
-                    .font(.system(size: 32))
+                Image(systemName: "line.3.horizontal.decrease")
+                    .font(.system(size: 25))
                     .foregroundColor(.black)
             })
         
@@ -64,10 +69,23 @@ struct FilterButton : View {
     }
 }
 
+struct BookMarkBtn : View {
+    var body: some View {
+        Button(
+            action: {
 
-//struct TopBar_Previews: PreviewProvider {
-//    @State static var e : Bool = false
-//    static var previews: some View {
-//        TopBar(example: $e)
-//    }
-//}
+            }, label: {
+                Image(systemName: "bookmark.fill")
+                    .font(.system(size: 25))
+                    .foregroundColor(.black)
+            })
+    }
+}
+
+
+struct TopBar_Previews: PreviewProvider {
+    @State static var e : Bool = false
+    static var previews: some View {
+        TopBar(example: .constant(false), movies: .constant([Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "1970")]), isLoading: .constant(false), Genre: .constant([""]), streamingServices: .constant([""]), minYear: .constant(1930), maxYear: .constant(2000), isMovie: .constant(false))
+    }
+}

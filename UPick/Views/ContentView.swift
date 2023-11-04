@@ -33,7 +33,7 @@ struct ContentView: View {
             TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, streamingServices: $StreamingServices, minYear: $minYear, maxYear: $maxYear, isMovie: $isMovie)
             
             
-            MovieScroll(AboutShowing: $AboutShowing, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
+            MovieScroll(AboutShowing: $AboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
             
         }.frame(height: screenHeight)
         

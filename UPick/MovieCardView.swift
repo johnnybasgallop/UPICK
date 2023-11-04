@@ -14,6 +14,7 @@ struct MovieCardView: View {
     
     @Binding var AboutShowing : Bool
     @Binding var MovieState : Movie
+    @Binding var streamingServices : [String]
     
     var title : String
     var Img : String
@@ -44,7 +45,7 @@ struct MovieCardView: View {
             
             
             HStack{
-                AvailableStreamingServicesGroup(StreamingServices: StreamingServices)
+                AvailableStreamingServicesGroup(StreamingServices: StreamingServices, isCard: true, streamingServices: $streamingServices)
                 Spacer()
                 MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices, year: year, genres: genres )
             }
@@ -104,13 +105,28 @@ struct MoreInfoButton : View {
 struct AvailableStreamingServicesGroup : View {
     
     var StreamingServices: [String]
+    var isCard : Bool
     
+    @Binding var streamingServices : [String]
     
     var body: some View{
-        HStack(spacing: -12){
-            var newArr = Array(StreamingServices.prefix(4))
+        HStack(spacing: -6){
             
-            ForEach(newArr, id: \.self) { string in
+            
+            
+            let sorted = StreamingServices.sorted  { item1, item2 in
+                if streamingServices.contains(item1) && !streamingServices.contains(item2) {
+                    return false
+                } else if streamingServices.contains(item2) && !streamingServices.contains(item1) {
+                    return true
+                } else {
+                    return item1 < item2
+                }
+            }
+            
+            var newArr = Array(sorted.suffix(3))
+            
+            ForEach(isCard ? newArr : sorted , id: \.self) { string in
                 
                 StreamingServiceIndicator(text: string)
             }
@@ -133,60 +149,63 @@ struct StreamingServiceIndicator : View {
             
             switch text{
             case "netflix":
-                AsyncImage(url: URL(string: "https://logo.clearbit.com/Netflix.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/netlfix.jpeg?alt=media&token=1f0f7a76-76fc-40b8-8bd8-c8e026850c11&_gl=1*3vtr0x*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzU0MTcuNTUuMC4w")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 48, height: 48)
                 } placeholder: {
                     ProgressView()
                 }
                 .cornerRadius(35)
                 
             case "apple":
-                AsyncImage(url: URL(string: "https://logo.clearbit.com/apple.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 30, height: 30)
+                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/atv.jpeg?alt=media&token=bc11d27b-c7e7-4021-a47b-020dfd607e47&_gl=1*5l3ay4*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzQ5OTQuOC4wLjA.")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
+                                            .background(.white)
                 } placeholder: {
                     ProgressView()
                 }
-                .cornerRadius(18)
+                .cornerRadius(24)
+              
+
                 
             case "iplayer":
-                AsyncImage(url: URL(string: "https://logo.clearbit.com/bbcIplayer.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 30, height: 30)
+                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/bbcIplayer.png?alt=media&token=e00acdea-ac37-4543-945f-bd4fe9fda281&_gl=1*1xwygs6*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzUyNjguNTUuMC4w")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
                 } placeholder: {
                     ProgressView()
                 }
-                .cornerRadius(18)
+                .cornerRadius(24)
                 
             case "prime":
-                AsyncImage(url: URL(string: "https://logo.clearbit.com/primevideo.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/primevideo-removebg-preview.png?alt=media&token=375c6cfe-e6f7-474a-993a-aebd391ee566&_gl=1*tnfjl*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzUxNzMuNTMuMC4w")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
                 } placeholder: {
                     ProgressView()
                 }
                 .cornerRadius(30)
                 
             case "disney":
-                AsyncImage(url: URL(string: "https://logo.clearbit.com/disney.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/disney.jpeg?alt=media&token=3c727285-eaf2-4e41-bc6b-4176b5126e47&_gl=1*50k677*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzYwOTkuNTMuMC4w")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
                 } placeholder: {
                     ProgressView()
                 }
                 .cornerRadius(30)
                 
             case "now":
-                AsyncImage(url: URL(string: "https://logo.clearbit.com/nowtv.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/nowtv.png?alt=media&token=374042d7-d2a2-4244-b442-92b976b05829&_gl=1*of3jr9*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTE0MDg3MC4xNC4xLjE2OTkxNDA4NzguNTIuMC4w")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
                 } placeholder: {
                     ProgressView()
                 }
-                .cornerRadius(30)
+                .cornerRadius(25)
                 
             case "paramount":
-                AsyncImage(url: URL(string: "https://logo.clearbit.com/paramount.com")) { image in
-                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40)
+                AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/paramountplus.jpeg?alt=media&token=c39bd8f0-f1f5-4d53-ba6d-4118c241e2ec&_gl=1*7hkrz2*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzYwMDMuNDEuMC4w")) { image in
+                    image.resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
                 } placeholder: {
                     ProgressView()
                 }
-                .cornerRadius(30)
+                .cornerRadius(24)
                 
                 
                 
@@ -204,11 +223,11 @@ struct StreamingServiceIndicator : View {
         }
         
         .frame(width: 50, height: 50)
-        .overlay(
-            RoundedRectangle(cornerRadius: 45)
-                .stroke(Color(UIColor.gray), lineWidth: 0.8)
-        )
-        .background(.white)
+//        .overlay(
+//            RoundedRectangle(cornerRadius: 45)
+//                .stroke(Color(UIColor.gray), lineWidth: 0.8)
+//        )
+//        .background(.white)
         .offset(x: -15)
     }
 }
@@ -225,11 +244,11 @@ struct MovieCardView_Previews: PreviewProvider {
     
     @State static var descriptionState : String = "With his carefree lifestyle on the line, a wealthy charmer poses as a ranch hand to get a hardworking farmer to sell her family’s land before Christmas."
     
-    @State static var streamingServices : [String] = ["netflix", "apple", "prime", "disney"]
+    @State static var streamingServices : [String] = ["netflix", "paramount", "now", "disney"]
     
     @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "")
     
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017", genres: [""])
+        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, streamingServices: .constant(["now", "disney"]), title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017", genres: [""])
     }
 }

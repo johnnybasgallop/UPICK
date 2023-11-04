@@ -61,7 +61,12 @@ struct MovieBrowseView : View {
                 Text("\(MovieState.title)").font(.system(size: 27, weight: .semibold))
                     .padding(.vertical, 5)
                 
-                Text("(\(MovieState.year))").foregroundColor(.gray).offset(y: 5)
+                HStack{
+                    
+                    Text("(\(MovieState.year))").foregroundColor(.gray)
+                    AvailableStreamingServicesGroup(StreamingServices: MovieState.StreamingServices, isCard: false, streamingServices: .constant(["netflix"]))
+                    
+                }.offset(y: 5)
 
                 HStack{
                     ForEach(MovieState.genres, id: \.self){ genre in

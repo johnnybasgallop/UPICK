@@ -97,13 +97,20 @@ struct streamingServiceSelect : View {
     @Binding var streamingServices : [String]
     
     let StreamingServices : [[String: Any]] = [
-        ["name" : "netflix", "img": "https://logo.clearbit.com/Netflix.com"],
-        ["name" : "prime.subscription", "img": "https://logo.clearbit.com/primevideo.com"],
-        ["name" : "apple.subscription", "img": "https://logo.clearbit.com/apple.com"],
-        ["name" : "iplayer", "img": "https://logo.clearbit.com/bbcIplayer.com"],
-        ["name" : "disney.subscription", "img": "https://logo.clearbit.com/disney.com"],
-        ["name" : "now", "img": "https://logo.clearbit.com/nowtv.com"],
-        ["name" : "paramount.subscription", "img": "https://logo.clearbit.com/paramount.com"],
+        
+        ["name" : "netflix", "img": "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/netlfix.jpeg?alt=media&token=1f0f7a76-76fc-40b8-8bd8-c8e026850c11&_gl=1*3vtr0x*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzU0MTcuNTUuMC4w"],
+        
+        ["name" : "prime.subscription", "img": "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/primevideo-removebg-preview.png?alt=media&token=375c6cfe-e6f7-474a-993a-aebd391ee566&_gl=1*tnfjl*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzUxNzMuNTMuMC4w"],
+        
+        ["name" : "apple.subscription", "img": "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/atv.jpeg?alt=media&token=bc11d27b-c7e7-4021-a47b-020dfd607e47&_gl=1*5l3ay4*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzQ5OTQuOC4wLjA."],
+        
+        ["name" : "iplayer", "img": "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/bbcIplayer.png?alt=media&token=e00acdea-ac37-4543-945f-bd4fe9fda281&_gl=1*1xwygs6*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzUyNjguNTUuMC4w"],
+        
+        ["name" : "disney.subscription", "img": "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/disney.jpeg?alt=media&token=3c727285-eaf2-4e41-bc6b-4176b5126e47&_gl=1*50k677*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzYwOTkuNTMuMC4w"],
+        
+        ["name" : "now", "img": "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/nowtv.png?alt=media&token=374042d7-d2a2-4244-b442-92b976b05829&_gl=1*of3jr9*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTE0MDg3MC4xNC4xLjE2OTkxNDA4NzguNTIuMC4w"],
+        
+        ["name" : "paramount.subscription", "img": "https://firebasestorage.googleapis.com/v0/b/cbstocks-79297.appspot.com/o/paramountplus.jpeg?alt=media&token=c39bd8f0-f1f5-4d53-ba6d-4118c241e2ec&_gl=1*7hkrz2*_ga*NTY5OTQ4NjIyLjE2OTIzNjI3ODA.*_ga_CW55HF8NVT*MTY5OTEzNDk0Mi4xMy4xLjE2OTkxMzYwMDMuNDEuMC4w"],
         
     ]
     

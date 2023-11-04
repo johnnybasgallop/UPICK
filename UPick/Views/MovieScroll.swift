@@ -12,7 +12,7 @@ struct MovieScroll: View {
     
     @StateObject var apiController = APIController()
     @Binding var AboutShowing : Bool
-    
+    @Binding var streamingServices : [String]
     @Binding var movies : [Movie]
     @State var rerender : Bool = false
     @Binding var isLoading : Bool
@@ -43,7 +43,7 @@ struct MovieScroll: View {
                     VStack(spacing: 0){
                         ForEach(movies, id:  \.self) { movie in
                             VStack{
-                                MovieCardView(AboutShowing: $AboutShowing, MovieState: $MovieState, title: movie.title, Img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500/\(movie.img)", description: movie.description, StreamingServices: movie.StreamingServices, year: movie.year, genres: movie.genres)
+                                MovieCardView(AboutShowing: $AboutShowing, MovieState: $MovieState, streamingServices: $streamingServices, title: movie.title, Img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500/\(movie.img)", description: movie.description, StreamingServices: movie.StreamingServices, year: movie.year, genres: movie.genres)
                             }.frame(width: screenWidth,height: screenHeight * 0.81)
                             
                         }
