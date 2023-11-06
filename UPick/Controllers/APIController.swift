@@ -137,10 +137,11 @@ class APIController : ObservableObject {
                     if let json = value as? [String: Any], let results = json["results"] as? [[String: Any]], let firstResult = results.first {
                         
                         if let posterPath = firstResult["poster_path"] as? String,
-                           let overview = firstResult["overview"] as? String {
+                           let overview = firstResult["overview"] as? String,
+                           let rating = firstResult["vote_average"] as? Double{
                             
                             // Create a Movie instance with the fetched data
-                            let movie = Movie(title: movieName, img: posterPath, description: overview, StreamingServices: streamingInfo, genres: genres, year: year  )
+                            let movie = Movie(title: movieName, img: posterPath, description: overview, StreamingServices: streamingInfo, genres: genres, year: year, rating: rating  )
                             
                             completion(movie)
                         } else {
@@ -158,8 +159,9 @@ class APIController : ObservableObject {
     
     
     
+
     
-    
+  
     
     // Example usage
     

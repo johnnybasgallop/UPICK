@@ -15,4 +15,5 @@ struct Movie : Hashable, Identifiable {
     var StreamingServices : [String]
     var genres : [String]
     var year : String
+    var rating : Double
 }

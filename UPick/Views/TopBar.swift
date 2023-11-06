@@ -86,6 +86,6 @@ struct BookMarkBtn : View {
 struct TopBar_Previews: PreviewProvider {
     @State static var e : Bool = false
     static var previews: some View {
-        TopBar(example: .constant(false), movies: .constant([Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "1970")]), isLoading: .constant(false), Genre: .constant([""]), streamingServices: .constant([""]), minYear: .constant(1930), maxYear: .constant(2000), isMovie: .constant(false))
+        TopBar(example: .constant(false), movies: .constant([Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "1970", rating: 3.5)]), isLoading: .constant(false), Genre: .constant([""]), streamingServices: .constant([""]), minYear: .constant(1930), maxYear: .constant(2000), isMovie: .constant(false))
     }
 }

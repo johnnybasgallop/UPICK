@@ -22,6 +22,7 @@ struct MovieCardView: View {
     var StreamingServices : [String]
     var year : String
     var genres : [String]
+    var rating : Double
     
     var body: some View {
         
@@ -32,7 +33,9 @@ struct MovieCardView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(7)
-                
+                    .overlay(
+                        BookMarkButton().offset(x: screenWidth * 0.35, y: screenHeight * 0.25)
+                    )
                 
             } placeholder: {
                 Color.gray
@@ -47,7 +50,7 @@ struct MovieCardView: View {
             HStack{
                 AvailableStreamingServicesGroup(StreamingServices: StreamingServices, isCard: true, streamingServices: $streamingServices)
                 Spacer()
-                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices, year: year, genres: genres )
+                MoreInfoButton(AboutShowing: $AboutShowing, MovieState: $MovieState, description: description, title: title, img: Img, streamingServices: StreamingServices, year: year, genres: genres, rating: rating )
             }
             
             
@@ -73,6 +76,9 @@ struct MoreInfoButton : View {
     var streamingServices : [String]
     var year : String
     var genres : [String]
+    var rating : Double
+    
+    
     
     var body: some View {
         Button(action: {
@@ -84,6 +90,7 @@ struct MoreInfoButton : View {
             MovieState.StreamingServices = streamingServices
             MovieState.year = year
             MovieState.genres = genres
+            MovieState.rating = rating
             
         }, label: {
             Text("More Info")
@@ -99,6 +106,23 @@ struct MoreInfoButton : View {
                 .presentationDetents([.fraction(0.45), .large])
         }
         
+    }
+}
+
+
+struct BookMarkButton : View {
+    @State var isSelected : Bool = false
+    var body: some View {
+        
+        
+        Button(action: {
+            print("Bookmarked")
+        }, label: {
+            ZStack{
+                Circle().frame(width: 50).foregroundColor(.white)
+                Image(systemName: isSelected ? "bookmark.fill" : "bookmark").font(.system(size: 24)).foregroundColor(.black)
+            }
+        })
     }
 }
 
@@ -246,9 +270,9 @@ struct MovieCardView_Previews: PreviewProvider {
     
     @State static var streamingServices : [String] = ["netflix", "paramount", "now", "disney"]
     
-    @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "")
+    @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "", rating: 00)
     
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, streamingServices: .constant(["now", "disney"]), title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017", genres: [""])
+        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, streamingServices: .constant(["now", "disney"]), title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017", genres: [""], rating: 5.5)
     }
 }

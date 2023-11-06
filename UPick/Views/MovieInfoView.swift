@@ -55,15 +55,24 @@ struct MovieBrowseView : View {
     
     struct MovieInfo : View {
         @Binding var MovieState : Movie
+        
+        
+        
         var body: some View {
+            
+            let movieRating = String(format: "%.1f", MovieState.rating)
+            
             VStack(alignment: .leading){
                 
                 Text("\(MovieState.title)").font(.system(size: 27, weight: .semibold))
                     .padding(.vertical, 5)
                 
+                Text("\(movieRating)/10").foregroundColor(.yellow).font(.system(size: 20, weight: .bold))
+                
                 HStack{
                     
                     Text("(\(MovieState.year))").foregroundColor(.gray)
+                    
                     AvailableStreamingServicesGroup(StreamingServices: MovieState.StreamingServices, isCard: false, streamingServices: .constant(["netflix"]))
                     
                 }.offset(y: 5)
@@ -94,7 +103,7 @@ struct MovieBrowseView : View {
     
     
     struct MovieInfoView_Previews: PreviewProvider {
-        @State static var movieState : Movie = Movie(title: "Example Movie", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "With his carefree lifestyle on the line, a wealthy charmer poses as a ranch hand to get a hardworking farmer to sell her family’s land before Christmas.", StreamingServices: ["disney", "prime"], genres: ["comedy", "drama"], year: "2017")
+        @State static var movieState : Movie = Movie(title: "Example Movie", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "With his carefree lifestyle on the line, a wealthy charmer poses as a ranch hand to get a hardworking farmer to sell her family’s land before Christmas.", StreamingServices: ["disney", "prime"], genres: ["comedy", "drama"], year: "2017", rating: 8.3)
         static var previews: some View {
             MovieInfoView(MovieState: $movieState)
         }
