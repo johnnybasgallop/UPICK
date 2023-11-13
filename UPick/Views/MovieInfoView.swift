@@ -80,10 +80,10 @@ struct MovieBrowseView : View {
                 HStack{
                     ForEach(MovieState.genres, id: \.self){ genre in
                         Text(genre.description)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 12)
-                            .background(.white)
+                            .background(.black)
                             .cornerRadius(10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 13)

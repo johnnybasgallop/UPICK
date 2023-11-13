@@ -16,11 +16,13 @@ struct TopBar : View {
     @Binding var minYear : Int
     @Binding var maxYear : Int
     @Binding var isMovie : Bool
+    @Binding var isBookmarkView : Bool
+    
     var body: some View {
         
         HStack {
             
-            BookMarkBtn()
+            BookMarkBtn(isBookmarkView: $isBookmarkView)
             
             Spacer()
             
@@ -70,10 +72,13 @@ struct FilterButton : View {
 }
 
 struct BookMarkBtn : View {
+    
+    @Binding var isBookmarkView : Bool
+    
     var body: some View {
         Button(
             action: {
-
+                isBookmarkView = true
             }, label: {
                 Image(systemName: "bookmark.fill")
                     .font(.system(size: 25))
@@ -86,6 +91,6 @@ struct BookMarkBtn : View {
 struct TopBar_Previews: PreviewProvider {
     @State static var e : Bool = false
     static var previews: some View {
-        TopBar(example: .constant(false), movies: .constant([Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "1970", rating: 3.5)]), isLoading: .constant(false), Genre: .constant([""]), streamingServices: .constant([""]), minYear: .constant(1930), maxYear: .constant(2000), isMovie: .constant(false))
+        TopBar(example: .constant(false), movies: .constant([Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "1970", rating: 3.5)]), isLoading: .constant(false), Genre: .constant([""]), streamingServices: .constant([""]), minYear: .constant(1930), maxYear: .constant(2000), isMovie: .constant(false), isBookmarkView: .constant(false))
     }
 }

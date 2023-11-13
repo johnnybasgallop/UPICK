@@ -15,6 +15,7 @@ struct MovieCardView: View {
     @Binding var AboutShowing : Bool
     @Binding var MovieState : Movie
     @Binding var streamingServices : [String]
+    @Binding var bookmarkedMovie : [Movie]
     
     var title : String
     var Img : String
@@ -23,6 +24,7 @@ struct MovieCardView: View {
     var year : String
     var genres : [String]
     var rating : Double
+    var alreadyBookmarked : Bool
     
     var body: some View {
         
@@ -34,7 +36,7 @@ struct MovieCardView: View {
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(7)
                     .overlay(
-                        BookMarkButton().offset(x: screenWidth * 0.35, y: screenHeight * 0.25)
+                        BookMarkButton( MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovie, alreadyBookmarked: alreadyBookmarked, description: description, title: title, img: Img, streamingServices: streamingServices, year: year, genres: genres, rating: rating).offset(x: screenWidth * 0.35, y: screenHeight * 0.25)
                     )
                 
             } placeholder: {
@@ -112,15 +114,51 @@ struct MoreInfoButton : View {
 
 struct BookMarkButton : View {
     @State var isSelected : Bool = false
+    @Binding var MovieState : Movie
+    @StateObject var storageController = LocalStorage()
+    @Binding var bookmarkedMovies : [Movie]
+    var alreadyBookmarked : Bool
+    
+    var description : String
+    var title : String
+    var img : String
+    var streamingServices : [String]
+    var year : String
+    var genres : [String]
+    var rating : Double
     var body: some View {
         
         
+        
+        
         Button(action: {
-            print("Bookmarked")
+            
+          
+            isSelected.toggle()
+            
+            if isSelected {
+                
+                storageController.AppendMovie(bookmarkedMovies: bookmarkedMovies, movie: Movie(title: title, img: img, description: description, StreamingServices: streamingServices, genres: genres, year: year, rating: rating), key: "bookmarked"){error in
+                    if let error = error{
+                        print("error calling the appendMovie function in the MoviecardView: L138-145")
+                    }
+                    
+                    else{
+                        bookmarkedMovies = storageController.movies
+                        print("storageControllerMJovioes: \(storageController.movies)")
+                        print("bookmarked \(bookmarkedMovies)")
+                    }
+                }
+                
+                
+                
+            }
+            print("bookmarked")
+            
         }, label: {
             ZStack{
                 Circle().frame(width: 50).foregroundColor(.white)
-                Image(systemName: isSelected ? "bookmark.fill" : "bookmark").font(.system(size: 24)).foregroundColor(.black)
+                Image(systemName: isSelected || alreadyBookmarked ? "bookmark.fill" : "bookmark").font(.system(size: 24)).foregroundColor(.black)
             }
         })
     }
@@ -273,6 +311,6 @@ struct MovieCardView_Previews: PreviewProvider {
     @State static var movieState : Movie = Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "", rating: 00)
     
     static var previews: some View {
-        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, streamingServices: .constant(["now", "disney"]), title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017", genres: [""], rating: 5.5)
+        MovieCardView(AboutShowing: $AboutShowingPR, MovieState: $movieState, streamingServices: .constant(["now", "disney"]), bookmarkedMovie: .constant([Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "", rating: 8.1)]), title: title, Img: imgPR, description: description, StreamingServices: streamingServices, year: "2017", genres: [""], rating: 5.5, alreadyBookmarked: false)
     }
 }

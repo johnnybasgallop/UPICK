@@ -24,18 +24,44 @@ struct ContentView: View {
     @State var isMovie : Bool = true
     @State var minYear : Int = 1980
     @State var maxYear : Int = 2023
+    @State var bookmarkedMovies : [Movie] = []
     
+    @State var isBookmarkView : Bool = false
     
+    @StateObject var storageController = LocalStorage()
     
     var body: some View {
         VStack(spacing: 0) {
             
-            TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, streamingServices: $StreamingServices, minYear: $minYear, maxYear: $maxYear, isMovie: $isMovie)
+            if !isBookmarkView {
+                
+                TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, streamingServices: $StreamingServices, minYear: $minYear, maxYear: $maxYear, isMovie: $isMovie, isBookmarkView: $isBookmarkView)
+                
+                
+                MovieScroll(AboutShowing: $AboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovies, alreadyBookmarked: false)
+                
+            }
             
             
-            MovieScroll(AboutShowing: $AboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
+            else if isBookmarkView {
+                BookmarkView(isBookmarkView: $isBookmarkView, bookmarkedMovies: $bookmarkedMovies, AboutShowing: $AboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
+            }
             
         }.frame(height: screenHeight)
+        
+            .onAppear{
+                storageController.getMovies(key: "bookmarked"){error in
+                    if let error = error {
+                        print("error getting the movies in contentView")
+                    }
+                    
+                    else{
+                        print("published var Movies after onAppear in contentView\(storageController.movies)")
+                        
+                        bookmarkedMovies = storageController.movies
+                    }
+                }
+            }
         
     }
 }

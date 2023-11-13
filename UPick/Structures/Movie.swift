@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie : Hashable, Identifiable {
+struct Movie : Hashable, Identifiable, Codable {
     var id = UUID()
     var title : String
     var img : String
