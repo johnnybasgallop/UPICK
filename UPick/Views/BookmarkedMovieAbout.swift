@@ -18,12 +18,13 @@ struct BookmarkedMovieAbout: View {
     @Binding var MovieState : Movie
     @Binding var BookmarkedMoviesShowing : Bool
     @Binding var bookmarkedMovies : [Movie]
+    @State var AlertShowing: Bool = false
     
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         
-        BookmarkedBrowseView(MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovies)
+        BookmarkedBrowseView(MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovies, AlertShowing: $AlertShowing)
         
             .onDisappear{
                 BookmarkedMoviesShowing = false
@@ -39,6 +40,7 @@ struct BookmarkedBrowseView : View {
     
     @Binding var MovieState : Movie
     @Binding var bookmarkedMovies : [Movie]
+    @Binding var AlertShowing: Bool
     
     var body: some View {
         ScrollView{
@@ -54,7 +56,7 @@ struct BookmarkedBrowseView : View {
                 } placeholder: {
                     Color.gray
                 }.overlay(
-                    BookmarkRemoveBtn(MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovies).offset(x: screenWidth * 0.4, y: screenWidth * -0.6)
+                    BookmarkRemoveBtn(MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovies, AlertShowing: $AlertShowing).offset(x: screenWidth * 0.4, y: screenWidth * -0.6)
                 )
                 
                 
@@ -139,19 +141,11 @@ struct BookmarkRemoveBtn : View {
     @Binding var MovieState : Movie
     @Binding var bookmarkedMovies : [Movie]
     @Environment(\.dismiss) var dismiss
+    @Binding var AlertShowing: Bool
     
     var body: some View {
         Button(action: {
-            storageController.deleteMovie(movieTitle: MovieState.title, key: "bookmarked"){error in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    bookmarkedMovies = storageController.movies
-                    dismiss()
-                    print("bookmarkedMovies: \(bookmarkedMovies)")
-                }
-            }
+            AlertShowing = true
         }, label: {
             ZStack{
                 Circle().frame(width: 50).foregroundColor(.white)
@@ -159,6 +153,29 @@ struct BookmarkRemoveBtn : View {
             }
 
         })
+        .alert(isPresented: $AlertShowing) {
+                   Alert(
+                    title: Text("UnBookmark \(MovieState.title)"),
+                    message: Text("By confirming you will remove \(MovieState.title) from your bookmarked movies"),
+                       primaryButton: .default(Text("Confirm")) {
+                           storageController.deleteMovie(movieTitle: MovieState.title, key: "bookmarked"){error in
+                               if let error = error {
+                                   print(error)
+                               }
+                               else {
+                                   bookmarkedMovies = storageController.movies
+                                   dismiss()
+                                   print("bookmarkedMovies: \(bookmarkedMovies)")
+                               }
+                           }
+                           
+                           AlertShowing = false
+                       },
+                       secondaryButton: .cancel(Text("Cancel")) {
+                           AlertShowing = false
+                       }
+                   )
+               }
     }
 }
 

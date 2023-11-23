@@ -36,6 +36,8 @@ struct FilterView: View {
         }
         .onDisappear{
             
+            
+            
             var servicesConcat : String = ""
             var genreConcat : String = ""
             
@@ -66,28 +68,34 @@ struct FilterView: View {
             
             
             
-            isLoading = true
-            
-            apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: isMovie)) { error in
-                if let error = error {
-                    print("Error: \(error)")
-                } else {
-                    // The data retrieval and processing are complete, but no movie data is returned here
-                    
-                    
-                    self.movies = apiController.Movies
-                    print("Data retrieval and processing completed")
-                    
-                    isLoading = false
-                    
+            if servicesConcat.count > 1 {
+                
+                isLoading = true
+                
+                
+                
+                apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: isMovie)) { error in
+                    if let error = error {
+                        print("Error: \(error)")
+                    } else {
+                        // The data retrieval and processing are complete, but no movie data is returned here
+                        
+                        
+                        self.movies = apiController.Movies
+                        print("Data retrieval and processing completed")
+                        
+                        isLoading = false
+                        
+                    }
                 }
+                
+                example.toggle()
+                
             }
-            
-            example.toggle()
-            
+        }
         }
     }
-}
+
 
 
 
