@@ -13,6 +13,7 @@ struct BookmarkView: View {
     @StateObject var storageController = LocalStorage()
     @Binding var bookmarkedMovies : [Movie]
     @Binding var AboutShowing : Bool
+    @Binding var BookmarkedAboutShowing : Bool
     @Binding var streamingServices : [String]
     @Binding var movies : [Movie]
     @State var rerender : Bool = false
@@ -49,7 +50,7 @@ struct BookmarkView: View {
                             ForEach(0..<numberOfColumns, id: \.self) { column in
                                 let index = row * numberOfColumns + column
                                 if index < bookmarkedMovies.count {
-                                    BookmarkedMovieImageButton(Img: bookmarkedMovies[index].img)
+                                    BookmarkedMovieImageButton(Movie: bookmarkedMovies[index], MovieState: $MovieState, BookmarkedAboutShowing: $BookmarkedAboutShowing, bookmarkedMovies: $bookmarkedMovies)
                                 }
                             }
                         }
@@ -64,18 +65,29 @@ struct BookmarkView: View {
             
             
         }
+        
     }
+    
+        
 }
     
     struct BookmarkedMovieImageButton: View {
-        var Img : String
+        var Movie : Movie
+        @Binding var MovieState : Movie
+        @Binding var BookmarkedAboutShowing : Bool
+        @Binding var bookmarkedMovies : [Movie]
+        
         var body: some View {
             
             VStack{
                 Button(action: {
+                    BookmarkedAboutShowing = true
+                    MovieState = UPick.Movie(title: Movie.title, img: Movie.img, description: Movie.description, StreamingServices: Movie.StreamingServices, genres: Movie.genres, year: Movie.year, rating: Movie.rating)
+                    
+                    
                     
                 }, label: {
-                    AsyncImage(url: URL(string: Img)) { image in
+                    AsyncImage(url: URL(string: Movie.img)) { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -89,6 +101,10 @@ struct BookmarkView: View {
                         }.frame(width: screenWidth / 3, height: screenWidth * 0.5)
                     }
                 })
+                .sheet(isPresented: $BookmarkedAboutShowing){
+                    BookmarkedMovieAbout(MovieState: $MovieState, BookmarkedMoviesShowing: $BookmarkedAboutShowing, bookmarkedMovies: $bookmarkedMovies)
+//                        .presentationDetents([.fraction(0.45), .large])
+                }
          
             }
             
@@ -100,7 +116,7 @@ struct BookmarkView: View {
 
 struct BookmarkView_Previews: PreviewProvider {
     static var previews: some View {
-        BookmarkView(isBookmarkView: .constant(true), bookmarkedMovies: .constant([Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2), Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2)]), AboutShowing: .constant(false), streamingServices: .constant(["netflix"]), movies: .constant([Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2)]), isLoading: .constant(false), MovieState: .constant(Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2)))
+        BookmarkView(isBookmarkView: .constant(true), bookmarkedMovies: .constant([Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2), Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2)]), AboutShowing: .constant(false), BookmarkedAboutShowing: .constant(false), streamingServices: .constant(["netflix"]), movies: .constant([Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2)]), isLoading: .constant(false), MovieState: .constant(Movie(title: "", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2)))
     }
 }
 

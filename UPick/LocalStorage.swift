@@ -54,7 +54,7 @@ class LocalStorage: ObservableObject{
     }
     
     
-    func deleteMovie(movie: Movie, key: String, completion: @escaping (Error?) -> Void){
+    func deleteMovie(movieTitle: String, key: String, completion: @escaping (Error?) -> Void){
         if let data = UserDefaults.standard.data(forKey: key){
             do {
                 // Create JSON Decoder
@@ -63,7 +63,9 @@ class LocalStorage: ObservableObject{
                 // Decode Note
                 var movies = try decoder.decode([Movie].self, from: data)
                 
-                movies.removeAll{$0 == movie}
+                movies.removeAll(where: {$0.title == movieTitle})
+                
+                print("movies after being filtered: \(movies)")
                 
                 
                 setMovies(movies: movies, key: "bookmarked"){error in

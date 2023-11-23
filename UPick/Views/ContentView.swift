@@ -25,6 +25,7 @@ struct ContentView: View {
     @State var minYear : Int = 1980
     @State var maxYear : Int = 2023
     @State var bookmarkedMovies : [Movie] = []
+    @State var BookmarkedAboutShowing : Bool = false
     
     @State var isBookmarkView : Bool = false
     
@@ -44,7 +45,7 @@ struct ContentView: View {
             
             
             else if isBookmarkView {
-                BookmarkView(isBookmarkView: $isBookmarkView, bookmarkedMovies: $bookmarkedMovies, AboutShowing: $AboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
+                BookmarkView(isBookmarkView: $isBookmarkView, bookmarkedMovies: $bookmarkedMovies, AboutShowing: $AboutShowing, BookmarkedAboutShowing: $BookmarkedAboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
             }
             
         }.frame(height: screenHeight)
