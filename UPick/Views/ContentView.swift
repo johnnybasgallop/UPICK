@@ -27,6 +27,7 @@ struct ContentView: View {
     @State var bookmarkedMovies : [Movie] = []
     @State var BookmarkedAboutShowing : Bool = false
     
+    
     @State var isBookmarkView : Bool = false
     
     @StateObject var storageController = LocalStorage()
