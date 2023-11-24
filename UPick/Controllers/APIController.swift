@@ -17,6 +17,7 @@ class APIController : ObservableObject {
     @Published var MovieNames : [String] = []
     @Published var PosterPaths : [String] = []
     
+    
     let apiKey = "YOUR_TMDB_API_KEY"
     var movieNames = ["The Matrix", "Inception", "Avatar"]
     
@@ -114,7 +115,7 @@ class APIController : ObservableObject {
                         dispatchGroup.notify(queue: .main) {
                             if let hasMore = json["hasMore"] as? Bool,
                                let nextCursor = json["nextCursor"] as? String,
-                               hasMore && self.Movies.count < 75 {
+                               hasMore && self.Movies.count < 100 {
                                 print("next cursor: \(nextCursor)")
                                 // Recursive call with the next cursor
                                 self.getData(FilterState: FilterState, cursor: nextCursor, completion: completion)
@@ -122,6 +123,13 @@ class APIController : ObservableObject {
                                 // All results are fetched, call the completion handler
                                 completion(nil)
                             }
+                            
+                       
+                            
+                            
+                            
+                            
+                            
                             
                             
                         }

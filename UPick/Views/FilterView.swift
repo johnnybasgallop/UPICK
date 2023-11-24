@@ -82,6 +82,7 @@ struct FilterView: View {
                         
                         
                         self.movies = apiController.Movies
+                        self.movies.shuffle()
                         print("Data retrieval and processing completed")
                         
                         isLoading = false

@@ -18,10 +18,15 @@ struct MovieScroll: View {
     @Binding var isLoading : Bool
     @Binding var MovieState : Movie
     @Binding var bookmarkedMovies : [Movie]
+    
     var alreadyBookmarked : Bool
 
     
+    
     var body: some View{
+        
+        
+        
         VStack(spacing:0){
             
             if movies.isEmpty && !isLoading {
@@ -43,6 +48,10 @@ struct MovieScroll: View {
             
             else {
                 
+                
+                
+                
+                
                 var filteredArrayA: [Movie] {
                      // Use filter to exclude movies from arrayA that match any movie in arrayB
                      return movies.filter { movieA in
@@ -52,9 +61,12 @@ struct MovieScroll: View {
                      }
                  }
                 
+                
+                
                 ScrollView(showsIndicators: false) {
                     
                     VStack(spacing: 0){
+                        
                         ForEach(filteredArrayA, id:  \.self) { movie in
                            
                                 VStack{
@@ -62,8 +74,7 @@ struct MovieScroll: View {
                                 }.frame(width: screenWidth,height: screenHeight * 0.81)
                                 
                             }
-                        
-                        
+    
                     }
                 }
                 .frame(height: screenHeight * 0.81)
