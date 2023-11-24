@@ -74,7 +74,7 @@ struct FilterView: View {
                 
                 
                 
-                apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: isMovie)) { error in
+                apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: isMovie), cursor: "") { error in
                     if let error = error {
                         print("Error: \(error)")
                     } else {

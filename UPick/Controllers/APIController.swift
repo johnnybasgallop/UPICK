@@ -31,7 +31,7 @@ class APIController : ObservableObject {
     ]
     
     
-    func getData(FilterState : Filter ,completion: @escaping (Error?) -> Void) {
+    func getData(FilterState : Filter ,cursor: String ,completion: @escaping (Error?) -> Void) {
         let url = "https://streaming-availability.p.rapidapi.com/search/filters"
         
         let Params: [String: String] = [
@@ -43,7 +43,11 @@ class APIController : ObservableObject {
             "genres_relation" : "or",
             "show_original_language": "en",
             "show_type": "movie",
+            "cursor": cursor
         ]
+        
+        
+        
         
         AF.request(url, method: .get, parameters: Params, headers: headers)
             .validate()
@@ -65,6 +69,8 @@ class APIController : ObservableObject {
                             
                             
                             if let originalTitle = result["originalTitle"] as? String,
+                               let hasMore = json["hasMore"] as? Bool,
+                               let nextCursor = json["nextCursor"] as? String,
                                let streamingInfo = result["streamingInfo"] as? [String: Any],
                                let genreInfo = result["genres"] as? [[String: Any]],
                                let year = result["year"] as? Int,
@@ -76,7 +82,7 @@ class APIController : ObservableObject {
                                     }
                                     
                                 }
-                             
+                                
                                 for serviceInfo in gbInfo {
                                     if let serviceName = serviceInfo["service"] as? String {
                                         if serviceArray.contains(serviceName) == false {
@@ -91,18 +97,33 @@ class APIController : ObservableObject {
                                 
                                 serviceArray.sort()
                                 
-                                self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray, year: "\(year)", genres: genreArray) { movie in
+                                self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray, year: "\(year)", genres: genreArray, nextCursor: nil) { movie in
                                     if let movie = movie {
                                         self.Movies.append(movie)
+                                        print(movie.title)
                                     }
                                     dispatchGroup.leave()
+                                    
+    
+                                    
                                 }
+                                
                             }
                         }
                         
                         dispatchGroup.notify(queue: .main) {
-                            // Completion handler is called when all requests are complete
-                            completion(nil)
+                            if let hasMore = json["hasMore"] as? Bool,
+                               let nextCursor = json["nextCursor"] as? String,
+                               hasMore && self.Movies.count < 75 {
+                                print("next cursor: \(nextCursor)")
+                                // Recursive call with the next cursor
+                                self.getData(FilterState: FilterState, cursor: nextCursor, completion: completion)
+                            } else {
+                                // All results are fetched, call the completion handler
+                                completion(nil)
+                            }
+                            
+                            
                         }
                     }
                 case .failure(let error):
@@ -114,7 +135,7 @@ class APIController : ObservableObject {
     
     
     
-    func getMovieInfo(movieName: String, apiKey: String, streamingInfo : [String], year : String, genres : [String], completion: @escaping (Movie?) -> Void) {
+    func getMovieInfo(movieName: String, apiKey: String, streamingInfo : [String], year : String, genres : [String], nextCursor: String? = nil,completion: @escaping (Movie?) -> Void) {
         // Encode the movie name for the URL using URLComponents
         var components = URLComponents(string: "https://api.themoviedb.org/3/search/movie")
         components?.queryItems = [
@@ -159,9 +180,9 @@ class APIController : ObservableObject {
     
     
     
-
     
-  
+    
+    
     
     // Example usage
     
