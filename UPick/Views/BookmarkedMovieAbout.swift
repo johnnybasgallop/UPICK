@@ -13,6 +13,7 @@
 //
 
 import SwiftUI
+import WrappingHStack
 
 struct BookmarkedMovieAbout: View {
     @Binding var MovieState : Movie
@@ -110,24 +111,23 @@ struct BookmarkedBrowseView : View {
                     AvailableStreamingServicesGroup(StreamingServices: MovieState.StreamingServices, isCard: false, streamingServices: .constant(["netflix"]))
                     
                 }.offset(y: 5)
-
-                HStack{
-                    ForEach(MovieState.genres, id: \.self){ genre in
-                        Text(genre.description)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 12)
-                            .background(.black)
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 13)
-                                    .stroke(Color.black, lineWidth: 2) // Add rounded border
-                            ).padding(.trailing, 4)
-                    }
-                }
-                .padding(.top, 20)
+                
+                WrappingHStack(MovieState.genres, id: \.self){genre in
+                    Text(genre.description)
+                    .foregroundColor(.white)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 12)
+                    .background(.black)
+                    .cornerRadius(10)
+                    .overlay(
+                    RoundedRectangle(cornerRadius: 13)
+                    .stroke(Color.black, lineWidth: 2) // Add rounded border
+                    ).padding(.trailing, 4)
+                        .padding(.top,10)
+                }.padding(.top ,10)
                 
             }.padding(30)
+                
                 .frame(width: screenWidth, alignment: .leading)
             
             
@@ -182,7 +182,7 @@ struct BookmarkRemoveBtn : View {
 
     
     struct BookmarkedMovieAbout_Previews: PreviewProvider {
-        @State static var movieState : Movie = Movie(title: "Example Movie", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "With his carefree lifestyle on the line, a wealthy charmer poses as a ranch hand to get a hardworking farmer to sell her family’s land before Christmas.", StreamingServices: ["disney", "prime"], genres: ["comedy", "drama"], year: "2017", rating: 8.3)
+        @State static var movieState : Movie = Movie(title: "Example Movie", img: "https://image.tmdb.org/t/p/w500//https://image.tmdb.org/t/p/w500///ay1EBaNZa8Bkh8uvNhfJ9rY70pk.jpg", description: "With his carefree lifestyle on the line, a wealthy charmer poses as a ranch hand to get a hardworking farmer to sell her family’s land before Christmas.", StreamingServices: ["disney", "prime"], genres: ["comedy", "action","science fiction"], year: "2017", rating: 8.3)
         static var previews: some View {
             BookmarkedMovieAbout(MovieState: $movieState, BookmarkedMoviesShowing: .constant(false), bookmarkedMovies: .constant([Movie(title: "", img: "", description: "", StreamingServices: [""], genres: [""], year: "", rating: 9.2)]))
         }
