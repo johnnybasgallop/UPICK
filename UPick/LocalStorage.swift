@@ -65,7 +65,7 @@ class LocalStorage: ObservableObject{
                 
                 movies.removeAll(where: {$0.title == movieTitle})
                 
-                print("movies after being filtered: \(movies)")
+                
                 
                 
                 setMovies(movies: movies, key: "bookmarked"){error in

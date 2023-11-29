@@ -14,5 +14,6 @@ struct Filter : Hashable {
     var minYear : Int
     var maxYear : Int
     var isMovie : Bool
+    var Country : String
 }
 

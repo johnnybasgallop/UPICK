@@ -40,7 +40,7 @@ struct MovieCardView: View {
                     )
                 
             } placeholder: {
-                Color.gray
+                ProgressView().frame(width: screenWidth * 0.9, height: screenHeight * 0.7)
             }
             .frame(width: screenWidth * 0.9)
             //                .offset(y: -20)
@@ -144,16 +144,17 @@ struct BookMarkButton : View {
                     }
                     
                     else{
-                        bookmarkedMovies = storageController.movies
-                        print("storageControllerMJovioes: \(storageController.movies)")
-                        print("bookmarked \(bookmarkedMovies)")
+                        withAnimation(Animation.easeInOut(duration: 0.5)){
+                            bookmarkedMovies = storageController.movies
+                        }
+                      
                     }
                 }
                 
                 
                 
             }
-            print("bookmarked")
+            
             
         }, label: {
             ZStack{

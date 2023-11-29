@@ -18,6 +18,7 @@ class APIController : ObservableObject {
     @Published var PosterPaths : [String] = []
     
     
+    
     let apiKey = "YOUR_TMDB_API_KEY"
     var movieNames = ["The Matrix", "Inception", "Avatar"]
     
@@ -32,7 +33,7 @@ class APIController : ObservableObject {
     ]
     
     
-    func getData(FilterState : Filter ,cursor: String ,completion: @escaping (Error?) -> Void) {
+    func getData(initial: Bool,FilterState : Filter ,cursor: String ,completion: @escaping (Error?) -> Void) {
         let url = "https://streaming-availability.p.rapidapi.com/search/filters"
         
         let Params: [String: String] = [
@@ -60,14 +61,12 @@ class APIController : ObservableObject {
                         
                         
                         
-                        
                         let dispatchGroup = DispatchGroup()
                         
                         for result in results {
                             
                             var serviceArray : [String] = []
                             var genreArray : [String] = []
-                            
                             
                             if let originalTitle = result["originalTitle"] as? String,
                                let hasMore = json["hasMore"] as? Bool,
@@ -101,7 +100,7 @@ class APIController : ObservableObject {
                                 self.getMovieInfo(movieName: originalTitle, apiKey: "15d2ea6d0dc1d476efbca3eba2b9bbfb", streamingInfo: serviceArray, year: "\(year)", genres: genreArray, nextCursor: nil) { movie in
                                     if let movie = movie {
                                         self.Movies.append(movie)
-                                        print(movie.title)
+                                        
                                     }
                                     dispatchGroup.leave()
                                     
@@ -113,17 +112,24 @@ class APIController : ObservableObject {
                         }
                         
                         dispatchGroup.notify(queue: .main) {
-                            if let hasMore = json["hasMore"] as? Bool,
-                               let nextCursor = json["nextCursor"] as? String,
-                               hasMore && self.Movies.count < 100 {
-                                print("next cursor: \(nextCursor)")
-                                // Recursive call with the next cursor
-                                self.getData(FilterState: FilterState, cursor: nextCursor, completion: completion)
-                            } else {
-                                // All results are fetched, call the completion handler
+                            
+                            if initial{
                                 completion(nil)
                             }
-                            
+                            else{
+                                
+                                if let hasMore = json["hasMore"] as? Bool,
+                                   let nextCursor = json["nextCursor"] as? String,
+                                   hasMore && self.Movies.count < 100 {
+                                    
+                                    // Recursive call with the next cursor
+                                    self.getData( initial: false,FilterState: FilterState, cursor: nextCursor, completion: completion)
+                                } else {
+                                    // All results are fetched, call the completion handler
+                                    completion(nil)
+                                }
+                                
+                            }
                        
                             
                             
@@ -165,11 +171,13 @@ class APIController : ObservableObject {
                 case .success(let value):
                     if let json = value as? [String: Any], let results = json["results"] as? [[String: Any]], let firstResult = results.first {
                         
+                        
+                        
                         if let posterPath = firstResult["poster_path"] as? String,
                            let overview = firstResult["overview"] as? String,
                            let rating = firstResult["vote_average"] as? Double{
                             
-                            // Create a Movie instance with the fetched data
+                            
                             let movie = Movie(title: movieName, img: posterPath, description: overview, StreamingServices: streamingInfo, genres: genres, year: year, rating: rating  )
                             
                             completion(movie)
@@ -185,14 +193,9 @@ class APIController : ObservableObject {
                 }
             }
     }
+
     
-    
-    
-    
-    
-    
-    
-    // Example usage
+
     
     
 }

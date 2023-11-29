@@ -10,6 +10,7 @@ import WrappingHStack
 
 struct FilterView: View {
     @State private var query: String = ""
+    @State private var selectedCountry: String = "gb"
     @StateObject var apiController = APIController()
     @Binding var minYear : Int
     @Binding var maxYear : Int
@@ -26,6 +27,8 @@ struct FilterView: View {
     var body: some View {
         ScrollView{
             
+//            CountrySelect(selectedCountry: $selectedCountry)
+            
             streamingServiceSelect(streamingServices: $streamingServices)
             
             GenreSelect(Genre: $Genre)
@@ -35,6 +38,7 @@ struct FilterView: View {
             
         }
         .onDisappear{
+            
             
             
             
@@ -74,7 +78,7 @@ struct FilterView: View {
                 
                 
                 
-                apiController.getData(FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: isMovie), cursor: "") { error in
+                apiController.getData(initial: false, FilterState : Filter(genres: [genreConcat], services: [servicesConcat], minYear: minYear, maxYear: maxYear, isMovie: isMovie, Country: selectedCountry), cursor: "") { error in
                     if let error = error {
                         print("Error: \(error)")
                     } else {
@@ -335,6 +339,44 @@ struct YearSliders : View {
             Divider()
         }
         
+    }
+}
+
+
+struct CountrySelect: View {
+    
+    let countries = [
+           "USA": "us",
+           "Canada": "ca",
+           "UK": "gb",
+           "Australia": "au",
+           "Germany": "de",
+           "France": "fr",
+           "Japan": "jp",
+           "China": "cn",
+           "India": "in"
+       ]
+    
+    @Binding var selectedCountry: String
+    
+    var body: some View {
+        VStack{
+            HStack{
+                Text("Country")
+                    .font(.system(size: 35, weight: .bold
+                                 ))
+                    .padding()
+                Spacer()
+                
+                Picker("Select your country", selection: $selectedCountry){
+                    ForEach(countries.sorted(by: { $0.key < $1.key }), id: \.key) { country, code in
+                                     Text(country).tag(code)
+                                 }
+                }.pickerStyle(.wheel)
+                    .frame(height: 125)
+            }
+            Divider()
+        }
     }
 }
 

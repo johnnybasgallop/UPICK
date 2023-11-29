@@ -31,6 +31,7 @@ struct ContentView: View {
     @State var isBookmarkView : Bool = false
     
     @StateObject var storageController = LocalStorage()
+    @StateObject var apiController = APIController()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -58,11 +59,26 @@ struct ContentView: View {
                     }
                     
                     else{
-                        print("published var Movies after onAppear in contentView\(storageController.movies)")
                         
                         bookmarkedMovies = storageController.movies
                     }
                 }
+                
+                isLoading = true
+                
+                apiController.getData(initial: true, FilterState: Filter(genres: ["12,35,10749"], services: ["apple,netflix,prime,iplayer,disney"], minYear: 2022, maxYear: 2023, isMovie: true, Country: "gb"), cursor: ""){ error in
+                    if let error = error{
+                        print(error)
+                    }
+                    
+                    else{
+                        self.movies = apiController.Movies
+                        self.movies.shuffle()
+                        isLoading = false
+                    }
+                    
+                }
+                
             }
         
     }

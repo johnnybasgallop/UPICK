@@ -16,4 +16,5 @@ struct Movie : Hashable, Identifiable, Codable {
     var genres : [String]
     var year : String
     var rating : Double
+    
 }

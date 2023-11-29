@@ -30,10 +30,9 @@ struct MovieScroll: View {
         VStack(spacing:0){
             
             if movies.isEmpty && !isLoading {
-                
-                Text("Search for a movie...").foregroundColor(.gray)
-                    .offset(y: 300)
-                
+
+                    Text("click the filter button to find movies...").foregroundColor(.gray)
+                        .offset(y: 300)
                 
                 
             }
