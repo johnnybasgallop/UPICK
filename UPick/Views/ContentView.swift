@@ -32,56 +32,66 @@ struct ContentView: View {
     
     @StateObject var storageController = LocalStorage()
     @StateObject var apiController = APIController()
-    
+    @AppStorage ("log_state") var log_state = false
     var body: some View {
-        VStack(spacing: 0) {
-            
-            if !isBookmarkView {
-                
-                TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, streamingServices: $StreamingServices, minYear: $minYear, maxYear: $maxYear, isMovie: $isMovie, isBookmarkView: $isBookmarkView)
-                
-                
-                MovieScroll(AboutShowing: $AboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovies, alreadyBookmarked: false)
-                
-            }
-            
-            
-            else if isBookmarkView {
-                BookmarkView(isBookmarkView: $isBookmarkView, bookmarkedMovies: $bookmarkedMovies, AboutShowing: $AboutShowing, BookmarkedAboutShowing: $BookmarkedAboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
-            }
-            
-        }.frame(height: screenHeight)
         
-            .onAppear{
-                storageController.getMovies(key: "bookmarked"){error in
-                    if let error = error {
-                        print("error getting the movies in contentView")
-                    }
+        if log_state{
+            
+            VStack(spacing: 0) {
+                
+                if !isBookmarkView {
                     
-                    else{
+                    TopBar(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre, streamingServices: $StreamingServices, minYear: $minYear, maxYear: $maxYear, isMovie: $isMovie, isBookmarkView: $isBookmarkView)
+                    
+                    
+                    MovieScroll(AboutShowing: $AboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState, bookmarkedMovies: $bookmarkedMovies, alreadyBookmarked: false)
+                    
+                }
+                
+                
+                else if isBookmarkView {
+                    BookmarkView(isBookmarkView: $isBookmarkView, bookmarkedMovies: $bookmarkedMovies, AboutShowing: $AboutShowing, BookmarkedAboutShowing: $BookmarkedAboutShowing, streamingServices: $StreamingServices, movies: $movies, isLoading: $isLoading, MovieState: $MovieState)
+                }
+                
+            }.frame(height: screenHeight)
+            
+                .onAppear{
+                    storageController.getMovies(key: "bookmarked"){error in
+                        if let error = error {
+                            print("error getting the movies in contentView")
+                        }
                         
-                        bookmarkedMovies = storageController.movies
-                    }
-                }
-                
-                isLoading = true
-                
-                apiController.getData(initial: true, FilterState: Filter(genres: ["12,35,10749"], services: ["apple,netflix,prime,iplayer,disney"], minYear: 2022, maxYear: 2023, isMovie: true, Country: "gb"), cursor: ""){ error in
-                    if let error = error{
-                        print(error)
+                        else{
+                            
+                            bookmarkedMovies = storageController.movies
+                        }
                     }
                     
-                    else{
-                        self.movies = apiController.Movies
-                        self.movies.shuffle()
-                        isLoading = false
+                    isLoading = true
+                    
+                    apiController.getData(initial: true, FilterState: Filter(genres: ["12,35,10749"], services: ["apple,netflix,prime,iplayer,disney"], minYear: 2022, maxYear: 2023, isMovie: true, Country: "gb"), cursor: ""){ error in
+                        if let error = error{
+                            print(error)
+                        }
+                        
+                        else{
+                            self.movies = apiController.Movies
+                            self.movies.shuffle()
+                            isLoading = false
+                        }
+                        
                     }
                     
                 }
-                
-            }
+            
+        }
         
+        else if !log_state {
+            SignUpScreen()
+        }
     }
+    
+    
 }
 
 

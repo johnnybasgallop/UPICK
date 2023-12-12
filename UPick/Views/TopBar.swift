@@ -17,24 +17,31 @@ struct TopBar : View {
     @Binding var maxYear : Int
     @Binding var isMovie : Bool
     @Binding var isBookmarkView : Bool
+
+    @State var logoutAlertShowing : Bool = false
     
     var body: some View {
         
         HStack {
             
-            BookMarkBtn(isBookmarkView: $isBookmarkView)
+            LogoutButton(logoutAlertShowing: $logoutAlertShowing)
             
             Spacer()
             
             Text("UPick")
-                .font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 32))
+                .font(Font.custom("JetBrainsMonoRoman-ExtraBold", size: 25)).offset(x: screenWidth * 0.03)
             
             
             Spacer()
-            FilterButton(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre ,streamingServices: $streamingServices, isMovie: $isMovie, minYear: $minYear, maxYear: $maxYear)
+            HStack{
+                FilterButton(example: $example, movies: $movies, isLoading: $isLoading, Genre: $Genre ,streamingServices: $streamingServices, isMovie: $isMovie, minYear: $minYear, maxYear: $maxYear).offset(x: -screenWidth * 0.04)
+                
+                BookMarkBtn(isBookmarkView: $isBookmarkView)
+            }
         }
         .padding(.horizontal, 30)
-        .frame(height: screenHeight * 0.07)
+        .frame(width: screenWidth ,height: screenHeight * 0.07)
+        
         
         
         
@@ -84,6 +91,38 @@ struct BookMarkBtn : View {
                     .font(.system(size: 25))
                     .foregroundColor(.black)
             })
+    }
+}
+
+
+struct LogoutButton : View {
+    @Binding var logoutAlertShowing: Bool
+    @AppStorage ("log_state") var log_state = false
+    var body: some View {
+        Button(
+            action: {
+                logoutAlertShowing = true
+            }, label: {
+                Image(systemName: "rectangle.portrait.and.arrow.right")
+                    .font(.system(size: 25))
+                    .foregroundColor(.black)
+            })
+        
+        .alert(isPresented: $logoutAlertShowing) {
+                   Alert(
+                    title: Text("Logout of account"),
+                    message: Text("By confirming you will logout of your Upick account"),
+                       primaryButton: .default(Text("Logout")) {
+                           
+                           log_state = false
+                           
+                          logoutAlertShowing = false
+                       },
+                       secondaryButton: .cancel(Text("Cancel")) {
+                           logoutAlertShowing = false
+                       }
+                   )
+               }
     }
 }
 

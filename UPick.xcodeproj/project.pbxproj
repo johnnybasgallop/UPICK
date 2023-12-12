@@ -42,6 +42,9 @@
 		CA678A632B0264C300B04C20 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CA678A622B0264C300B04C20 /* FirebaseStorageCombine-Community */; };
 		CA6C32C92AE54B78004F2833 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = CA6C32C82AE54B78004F2833 /* WrappingHStack */; };
 		CA7305952AC4BACF00DAF6D6 /* Snappable in Frameworks */ = {isa = PBXBuildFile; productRef = CA7305942AC4BACF00DAF6D6 /* Snappable */; };
+		CA85461B2B28D6EC001056B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA85461A2B28D6EC001056B0 /* GoogleService-Info.plist */; };
+		CA85461F2B28D773001056B0 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA85461E2B28D773001056B0 /* SignInViewModel.swift */; };
+		CA8546212B28D7A6001056B0 /* SignupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8546202B28D7A6001056B0 /* SignupScreen.swift */; };
 		CA8B4CC82AB740ED00855FF6 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8B4CC72AB740ED00855FF6 /* APIController.swift */; };
 		CA8B4CCB2AB7489A00855FF6 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CA8B4CCA2AB7489A00855FF6 /* Alamofire */; };
 		CA9F4F212B0A4FBA0008E7F1 /* BookmarkedMovieAbout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F4F202B0A4FBA0008E7F1 /* BookmarkedMovieAbout.swift */; };
@@ -67,6 +70,10 @@
 		CA6594AE2AFBC61600A2B57E /* BookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		CA6594B02AFBCBA600A2B57E /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		CA678A292B025F3C00B04C20 /* BookmarkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkManager.swift; sourceTree = "<group>"; };
+		CA85461A2B28D6EC001056B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CA85461C2B28D749001056B0 /* UPick.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UPick.entitlements; sourceTree = "<group>"; };
+		CA85461E2B28D773001056B0 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		CA8546202B28D7A6001056B0 /* SignupScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupScreen.swift; sourceTree = "<group>"; };
 		CA8B4CC72AB740ED00855FF6 /* APIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		CA9F4F202B0A4FBA0008E7F1 /* BookmarkedMovieAbout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedMovieAbout.swift; sourceTree = "<group>"; };
 		CAA4EBE72AC375D900CB28D9 /* FilterStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStruct.swift; sourceTree = "<group>"; };
@@ -133,6 +140,14 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		CA85461D2B28D752001056B0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA85461E2B28D773001056B0 /* SignInViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CA8B4CC62AB740D600855FF6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +185,9 @@
 		CAA635082AB1145400ED6419 /* UPick */ = {
 			isa = PBXGroup;
 			children = (
+				CA85461D2B28D752001056B0 /* Model */,
+				CA85461C2B28D749001056B0 /* UPick.entitlements */,
+				CA85461A2B28D6EC001056B0 /* GoogleService-Info.plist */,
 				CA41715E2ADED86B008E570D /* Info.plist */,
 				CA41715B2ADED827008E570D /* Fonts */,
 				CAA4EBE62AC375C300CB28D9 /* Structures */,
@@ -203,6 +221,7 @@
 				CA41715F2ADF02D7008E570D /* SplashScreenView.swift */,
 				CA6594AE2AFBC61600A2B57E /* BookmarkView.swift */,
 				CA9F4F202B0A4FBA0008E7F1 /* BookmarkedMovieAbout.swift */,
+				CA8546202B28D7A6001056B0 /* SignupScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -316,6 +335,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA85461B2B28D6EC001056B0 /* GoogleService-Info.plist in Resources */,
 				CA41715D2ADED833008E570D /* JBM.ttf in Resources */,
 				CAA635112AB1145500ED6419 /* Preview Assets.xcassets in Resources */,
 				CAA6350E2AB1145500ED6419 /* Assets.xcassets in Resources */,
@@ -333,6 +353,8 @@
 				CA678A2A2B025F3C00B04C20 /* BookmarkManager.swift in Sources */,
 				CAD0B0502AC370B100D8833B /* FilterView.swift in Sources */,
 				CAA4EBEA2AC375F800CB28D9 /* Movie.swift in Sources */,
+				CA85461F2B28D773001056B0 /* SignInViewModel.swift in Sources */,
+				CA8546212B28D7A6001056B0 /* SignupScreen.swift in Sources */,
 				CAD0B04E2AC0B5F300D8833B /* TopBar.swift in Sources */,
 				CA4171602ADF02D7008E570D /* SplashScreenView.swift in Sources */,
 				CA8B4CC82AB740ED00855FF6 /* APIController.swift in Sources */,
@@ -469,10 +491,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UPick/UPick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UPick/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XN4AG4472;
+				DEVELOPMENT_TEAM = DB62R67D27;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UPick/Info.plist;
@@ -487,7 +510,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.basgallop.moviePicker.UPick;
+				PRODUCT_BUNDLE_IDENTIFIER = com.basgallop.Upick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -500,10 +523,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UPick/UPick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UPick/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XN4AG4472;
+				DEVELOPMENT_TEAM = DB62R67D27;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UPick/Info.plist;
@@ -518,7 +542,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.basgallop.moviePicker.UPick;
+				PRODUCT_BUNDLE_IDENTIFIER = com.basgallop.Upick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
