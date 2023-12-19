@@ -1,3 +1,6 @@
+ABOUT:  
+
+Upick is a movie picking app i built using the TMDB API, you can filter by Streaming Services, Genres, Year of release and so on to find the perfect movie for you, the app includes Bookmarking functionality aswell as Sign in with apple.  
 
 
 https://github.com/johnnybasgallop/UPICK/assets/94317860/ef73a08c-eb6f-4b1f-999b-83f1bd672e09   
